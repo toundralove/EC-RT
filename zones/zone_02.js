@@ -1,4 +1,4 @@
-const buildUrl = "../unity/zone02/Build"
+const buildUrl = "../unity/zone02"
 
 const config = {
   dataUrl: buildUrl + "/build mamco.data",
