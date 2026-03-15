@@ -21,7 +21,7 @@ function showWarning(message) {
 }
 
 const script = document.createElement("script");
-script.src = buildUrl + "build mamco.loader.js";
+script.src = buildUrl + "/build mamco.loader.js";
 
 script.onload = () => {
   createUnityInstance(canvas, config, (progress) => {
@@ -36,7 +36,7 @@ script.onload = () => {
 };
 
 script.onerror = () => {
-  showWarning("Impossible de charger mamco.loader.js. Vérifie le dossier Build.");
+  showWarning("Impossible de charger build mamco.loader.js. Vérifie le dossier Build.");
 };
 
 document.body.appendChild(script);
