@@ -1,87 +1,57 @@
 <!DOCTYPE html>
 <html lang="fr">
-
 <head>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>EC@RT — Zone 02</title>
-
-<link rel="stylesheet" href="zone-02.css">
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EC@RT — Zone 02</title>
+  <link rel="stylesheet" href="zone_02.css" />
 </head>
-
-
 <body>
+  <div class="zone-layout">
+    <aside class="zone-sidebar">
+      <a class="site-title" href="../index.html">EC@RT</a>
 
-<div class="layout">
+      <nav class="zone-nav">
+        <a href="./zone-01.html">01. Zone 01</a>
+        <a href="./zone-02.html" class="active">02. Zone 02</a>
+        <a href="./zone-03.html">03. Zone 03</a>
+        <a href="./zone-04.html">04. Zone 04</a>
+        <a href="./zone-05.html">05. Zone 05</a>
+        <a href="./zone-06.html">06. Zone 06</a>
+        <a href="./zone-07.html">07. Zone 07</a>
+        <a href="./zone-08.html">08. Zone 08</a>
+        <a href="./zone-09.html">09. Zone 09</a>
+        <a href="./zone-10.html">10. Zone 10</a>
+        <a href="./zone-11.html">11. Zone 11</a>
+        <a href="./zone-12.html">12. 491</a>
+        <a href="./zone-13.html">13. Search and Destroy</a>
+      </nav>
+    </aside>
 
-<aside class="sidebar">
+    <main class="zone-main">
+      <section class="unity-section">
+        <div id="unity-container" class="unity-container">
+          <canvas id="unity-canvas"></canvas>
 
-<h1 class="logo">EC@RT</h1>
+          <div id="unity-loading-bar" class="unity-loading-bar">
+            <div class="loading-label">Chargement de la Zone 02…</div>
+            <div class="progress-track">
+              <div id="unity-progress-bar-full" class="progress-fill"></div>
+            </div>
+          </div>
 
-<nav>
+          <div id="unity-warning" class="unity-warning" style="display:none;"></div>
+        </div>
+      </section>
 
-<a href="zone-01.html">01. Zone 01</a>
-<a href="zone-02.html" class="active">02. Zone 02</a>
-<a href="zone-03.html">03. Zone 03</a>
-<a href="zone-04.html">04. Zone 04</a>
-<a href="zone-05.html">05. Zone 05</a>
-<a href="zone-06.html">06. Zone 06</a>
-<a href="zone-07.html">07. Zone 07</a>
-<a href="zone-08.html">08. Zone 08</a>
-<a href="zone-09.html">09. Zone 09</a>
-<a href="zone-10.html">10. Zone 10</a>
-<a href="zone-11.html">11. Zone 11</a>
-<a href="zone-12.html">12. 491</a>
-<a href="zone-13.html">13. Search and Destroy</a>
+      <section class="zone-meta">
+        <p class="zone-kicker">Zone 02</p>
+        <h1>Zone 02</h1>
+        <p>Scène Unity WebGL intégrée dans EC@RT.</p>
+      </section>
+    </main>
+  </div>
 
-</nav>
-
-</aside>
-
-
-<main class="content">
-
-<div class="unity-wrapper">
-
-<div id="unity-container">
-
-<canvas id="unity-canvas"></canvas>
-
-<div id="unity-loading">
-
-<div class="loading-text">loading zone 02...</div>
-
-<div class="progress-bar">
-
-<div id="progress"></div>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-
-<section class="zone-info">
-
-<h2>Zone 02</h2>
-
-<p>Scène Unity WebGL intégrée dans EC@RT.</p>
-
-</section>
-
-
-</main>
-
-</div>
-
-<script src="zone-02.js"></script>
-
+  <script src="zone_02.js"></script>
 </body>
-
 </html>

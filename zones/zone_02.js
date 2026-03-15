@@ -1,38 +1,42 @@
-const buildUrl = "../Build";
+const buildUrl = "../unity/zone02"
 
 const config = {
-
-dataUrl: buildUrl + "/mamco.data",
-frameworkUrl: buildUrl + "/mamco.framework.js",
-codeUrl: buildUrl + "/mamco.wasm",
-
-companyName: "ECART",
-productName: "Zone02",
-productVersion: "1.0"
-
+  dataUrl: buildUrl + "/build/mamco.data",
+  frameworkUrl: buildUrl + "/build/mamco.framework.js",
+  codeUrl: buildUrl + "/build/mamco.wasm",
+  streamingAssetsUrl: "StreamingAssets",
+  companyName: "ECART",
+  productName: "Zone02",
+  productVersion: "1.0"
 };
 
+const canvas = document.getElementById("unity-canvas");
+const loadingBar = document.getElementById("unity-loading-bar");
+const progressBarFull = document.getElementById("unity-progress-bar-full");
+const warningBanner = document.getElementById("unity-warning");
 
-const canvas = document.querySelector("#unity-canvas");
-const progress = document.querySelector("#progress");
-
+function showWarning(message) {
+  warningBanner.style.display = "block";
+  warningBanner.textContent = message;
+}
 
 const script = document.createElement("script");
-
 script.src = buildUrl + "/mamco.loader.js";
 
 script.onload = () => {
+  createUnityInstance(canvas, config, (progress) => {
+    progressBarFull.style.width = `${progress * 100}%`;
+  })
+    .then(() => {
+      loadingBar.style.display = "none";
+    })
+    .catch((message) => {
+      showWarning("Erreur Unity : " + message);
+    });
+};
 
-createUnityInstance(canvas, config, (p)=>{
-
-progress.style.width = (p*100)+"%";
-
-}).then(()=>{
-
-document.getElementById("unity-loading").style.display="none";
-
-});
-
+script.onerror = () => {
+  showWarning("Impossible de charger mamco.loader.js. Vérifie le dossier Build.");
 };
 
 document.body.appendChild(script);

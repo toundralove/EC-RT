@@ -1,129 +1,142 @@
-.layout{
-
-display:flex;
-height:100vh;
-background:black;
-color:white;
-
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: #000;
+  color: #fff;
+  font-family: Arial, Helvetica, sans-serif;
+  height: 100%;
 }
 
-
-.sidebar{
-
-width:220px;
-padding:25px;
-border-right:1px solid #222;
-
+.zone-layout {
+  display: flex;
+  min-height: 100vh;
 }
 
-.logo{
-
-font-size:26px;
-margin-bottom:20px;
-
+.zone-sidebar {
+  width: 280px;
+  padding: 28px;
+  border-right: 1px solid rgba(255,255,255,0.12);
+  box-sizing: border-box;
+  background: #000;
 }
 
-.sidebar a{
-
-display:block;
-color:white;
-text-decoration:none;
-margin-bottom:8px;
-opacity:0.7;
-
+.site-title {
+  display: inline-block;
+  color: #fff;
+  text-decoration: none;
+  font-size: 2.1rem;
+  margin-bottom: 24px;
 }
 
-.sidebar a:hover{
-
-opacity:1;
-
+.zone-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
-.sidebar a.active{
-
-opacity:1;
-font-weight:bold;
-
+.zone-nav a {
+  color: rgba(255,255,255,0.72);
+  text-decoration: none;
+  font-size: 1rem;
+  transition: opacity 0.2s ease;
 }
 
-
-.content{
-
-flex:1;
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-
+.zone-nav a:hover,
+.zone-nav a.active {
+  color: #fff;
 }
 
-
-.unity-wrapper{
-
-width:900px;
-max-width:90%;
-aspect-ratio:16/9;
-background:#111;
-position:relative;
-
+.zone-main {
+  flex: 1;
+  padding: 32px 40px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 24px;
 }
 
-
-#unity-container{
-
-width:100%;
-height:100%;
-
+.unity-section {
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
-
-#unity-canvas{
-
-width:100%;
-height:100%;
-background:black;
-
+.unity-container {
+  position: relative;
+  width: min(1100px, 100%);
+  aspect-ratio: 16 / 9;
+  background: #111;
+  overflow: hidden;
 }
 
-
-#unity-loading{
-
-position:absolute;
-top:50%;
-left:50%;
-transform:translate(-50%,-50%);
-text-align:center;
-
+#unity-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+  background: #111;
 }
 
-
-.loading-text{
-
-margin-bottom:10px;
-
+.unity-loading-bar {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 260px;
+  text-align: center;
 }
 
-
-.progress-bar{
-
-width:200px;
-height:10px;
-border:1px solid white;
-
+.loading-label {
+  margin-bottom: 12px;
+  font-size: 0.95rem;
+  color: #fff;
 }
 
-#progress{
-
-height:100%;
-width:0%;
-background:white;
-
+.progress-track {
+  width: 100%;
+  height: 12px;
+  border: 1px solid rgba(255,255,255,0.8);
+  background: transparent;
 }
 
+.progress-fill {
+  width: 0%;
+  height: 100%;
+  background: #fff;
+}
 
-.zone-info{
+.unity-warning {
+  position: absolute;
+  top: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: 80%;
+  padding: 12px 14px;
+  background: red;
+  color: #fff;
+  font-size: 0.9rem;
+  z-index: 10;
+}
 
-margin-top:20px;
-text-align:center;
+.zone-meta {
+  max-width: 1100px;
+  margin: 0 auto;
+  width: 100%;
+}
 
+.zone-kicker {
+  margin: 0 0 8px 0;
+  color: rgba(255,255,255,0.75);
+}
+
+.zone-meta h1 {
+  margin: 0 0 10px 0;
+  font-size: 3rem;
+  line-height: 1;
+}
+
+.zone-meta p {
+  margin: 0;
+  color: rgba(255,255,255,0.85);
 }
