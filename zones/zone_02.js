@@ -1,9 +1,9 @@
 const buildUrl = "../unity/zone02/Build"
 
 const config = {
-  dataUrl: buildUrl + "build mamco.data",
-  frameworkUrl: buildUrl + "build mamco.framework.js",
-  codeUrl: buildUrl + "build mamco.wasm",
+  dataUrl: buildUrl + "/build mamco.data",
+  frameworkUrl: buildUrl + "/build mamco.framework.js",
+  codeUrl: buildUrl + "/build mamco.wasm",
   streamingAssetsUrl: "StreamingAssets",
   companyName: "ECART",
   productName: "Zone02",
