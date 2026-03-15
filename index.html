@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EC@RT — Home</title>
+  <link rel="stylesheet" href="style/style.css" />
+</head>
+<body>
+  <main class="page">
+    <aside class="sidebar">
+      <h1 class="site-title">EC@RT</h1>
+
+      <nav class="sections" aria-label="Zones de l'exposition">
+  <a href="zones/zone-01.html" class="section-link" data-section="1">01. Poster.</a>
+  <a href="zones/zone-02.html" class="section-link" data-section="2">02. Background</a>
+  <a href="zones/zone-03.html" class="section-link" data-section="3">03. Anthropomorph</a>
+  <a href="zone-04.html" class="section-link" data-section="4">04. NWMV </a>
+  <a href="zone-05.html" class="section-link" data-section="5">05. BAD publications & mailers</a>
+  <a href="zone-06.html" class="section-link" data-section="6">06. VILE</a>
+  <a href="zone-07.html" class="section-link" data-section="7">07. Cazazza</a>
+  <a href="zone-08.html" class="section-link" data-section="8">08. Futurist Sound</a>
+  <a href="zone-09.html" class="section-link" data-section="9">09. Irene Dogmatic</a>
+  <a href="zone-10.html" class="section-link" data-section="10">10. COUM</a>
+  <a href="zone-11.html" class="section-link" data-section="11">11. 491</a>
+  <a href="zone-12.html" class="section-link" data-section="12">12. MAP</a>
+  <a href="zone-13.html" class="section-link" data-section="13">13. Search and Destroy </a>
+</nav>
+    </aside>
+
+    <section class="viewer">
+      <div class="map-wrap">
+        <img src="assets/world/plan-clean.png" alt="Plan de scénographie" class="map-image" />
+
+        <div class="zone-glow" id="zoneGlow"></div>
+
+        <div class="locator loc-1" data-section="1"></div>
+        <div class="locator loc-2" data-section="2"></div>
+        <div class="locator loc-3" data-section="3"></div>
+        <div class="locator loc-4" data-section="4"></div>
+        <div class="locator loc-5" data-section="5"></div>
+        <div class="locator loc-6" data-section="6"></div>
+        <div class="locator loc-7" data-section="7"></div>
+        <div class="locator loc-8" data-section="8"></div>
+        <div class="locator loc-9" data-section="9"></div>
+        <div class="locator loc-10" data-section="10"></div>
+        <div class="locator loc-11" data-section="11"></div>
+        <div class="locator loc-12" data-section="12"></div>
+        <div class="locator loc-13" data-section="13"></div>
+
+        <div class="plan-overlay">
+  <button class="hover-zone zone-1" data-section="1" aria-label="Zone 1"></button>
+  <button class="hover-zone zone-2" data-section="2" aria-label="Zone 2"></button>
+  <button class="hover-zone zone-3" data-section="3" aria-label="Zone 3"></button>
+  <button class="hover-zone zone-4" data-section="4" aria-label="Zone 4"></button>
+  <button class="hover-zone zone-5" data-section="5" aria-label="Zone 5"></button>
+  <button class="hover-zone zone-6" data-section="6" aria-label="Zone 6"></button>
+  <button class="hover-zone zone-7" data-section="7" aria-label="Zone 7"></button>
+  <button class="hover-zone zone-8" data-section="8" aria-label="Zone 8"></button>
+  <button class="hover-zone zone-9" data-section="9" aria-label="Zone 9"></button>
+  <button class="hover-zone zone-10" data-section="10" aria-label="Zone 10"></button>
+  <button class="hover-zone zone-11" data-section="11" aria-label="Zone 11"></button>
+  <button class="hover-zone zone-12" data-section="12" aria-label="Zone 12"></button>
+  <button class="hover-zone zone-13" data-section="13" aria-label="Zone 13"></button>
+</div>
+
+        <div class="plan-caption">Plan interactif</div>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
