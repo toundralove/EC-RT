@@ -1,9 +1,9 @@
-const buildUrl = "../unity/zone02"
+const buildUrl = "../unity/zone02/Build"
 
 const config = {
-  dataUrl: buildUrl + "/mamco.data",
-  frameworkUrl: buildUrl + "/mamco.framework.js",
-  codeUrl: buildUrl + "/mamco.wasm",
+  dataUrl: buildUrl + "/build mamco.data",
+  frameworkUrl: buildUrl + "/build mamco.framework.js",
+  codeUrl: buildUrl + "/build mamco.wasm",
   streamingAssetsUrl: "StreamingAssets",
   companyName: "ECART",
   productName: "Zone02",
@@ -21,7 +21,7 @@ function showWarning(message) {
 }
 
 const script = document.createElement("script");
-script.src = buildUrl + "/mamco.loader.js";
+script.src = buildUrl + "/build mamco.loader.js";
 
 script.onload = () => {
   createUnityInstance(canvas, config, (progress) => {
