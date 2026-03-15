@@ -138,3 +138,27 @@ body {
   margin: 0;
   color: rgba(255,255,255,0.85);
 }
+
+@media (max-width: 768px) {
+  .layout,
+  .zone-layout,
+  .page-layout {
+    flex-direction: column;
+  }
+
+  .sidebar,
+  .zone-sidebar {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid rgba(255,255,255,0.12);
+    padding: 16px;
+  }
+
+  .content,
+  .zone-main,
+  .main-content {
+    width: 100%;
+    padding: 16px;
+    box-sizing: border-box;
+  }
+}
