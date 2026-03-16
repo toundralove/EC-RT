@@ -1,18 +1,3 @@
-const currentZone = document.body.dataset.zone;
-const zoneLinks = document.querySelectorAll('.zone-link');
-const miniZones = document.querySelectorAll('.mini-zone');
-
-zoneLinks.forEach((link) => {
-  if (link.dataset.zoneLink === currentZone) {
-    link.classList.add('active');
-  }
-});
-
-miniZones.forEach((zone) => {
-  if (zone.dataset.miniZone === currentZone) {
-    zone.classList.add('active');
-  }
-
 // Nav image 
 const viewer = document.getElementById("imageViewer");
 const img = document.getElementById("zoomImage");
@@ -55,4 +40,3 @@ viewer.addEventListener("wheel", (e) => {
 }, { passive: false });
 
 updateTransform();
-});
