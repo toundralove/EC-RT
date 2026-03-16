@@ -1,13 +1,206 @@
+/* =========================
+   UNITY CONTENT LAYER
+   À ajouter sur toutes les zones
+   ========================= */
+
+/* Le body doit pouvoir accueillir un fond Unity fixe */
+body {
+  position: relative;
+  min-height: 100vh;
+  background: #000;
+}
+
+/* -------------------------
+   CONTENEUR UNITY
+   ------------------------- */
+
 #unity-container {
-  position: absolute;
+  position: fixed;
   inset: 0;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   overflow: hidden;
+  z-index: 0;
+  background: #000;
 }
 
 #unity-canvas {
+  display: block;
   width: 100%;
   height: 100%;
-  display: block;
+  background: #000;
+  outline: none;
+}
+
+/* Optionnel : léger voile pour lisibilité du contenu HTML */
+#unity-container::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0.38) 0%,
+    rgba(0, 0, 0, 0.18) 24%,
+    rgba(0, 0, 0, 0.06) 55%,
+    rgba(0, 0, 0, 0.12) 100%
+  );
+}
+
+/* -------------------------
+   HIÉRARCHIE DES CALQUES
+   ------------------------- */
+
+.page,
+.sidebar,
+.mini-map,
+.site-title,
+.zones-nav {
+  position: relative;
+  z-index: 10;
+}
+
+/* -------------------------
+   OVERLAY DE CHARGEMENT UNITY
+   ------------------------- */
+
+.unity-loading {
+  position: fixed;
+  inset: 0;
+  z-index: 12;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  pointer-events: none;
+  background: transparent;
+}
+
+.unity-loading-panel {
+  width: min(420px, 92vw);
+  padding: 1.4rem 1.2rem;
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(0, 0, 0, 0.58);
+  box-shadow: 0 0 30px rgba(255,255,255,0.06);
+  backdrop-filter: blur(8px);
+  pointer-events: auto;
+}
+
+.unity-loading.is-hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.unity-loading-title {
+  margin: 0 0 0.55rem 0;
+  color: #fff;
+  font-size: 0.88rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.unity-loading-text {
+  margin: 0 0 1rem 0;
+  color: rgba(255,255,255,0.72);
+  font-size: 0.82rem;
+  line-height: 1.5;
+}
+
+.unity-progress {
+  width: 100%;
+  height: 2px;
+  overflow: hidden;
+  background: rgba(255,255,255,0.16);
+}
+
+.unity-progress-bar {
+  width: 0%;
+  height: 100%;
+  background: #fff;
+  box-shadow: 0 0 14px rgba(255,255,255,0.5);
+  transition: width 0.22s ease;
+}
+
+.unity-progress-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 0.65rem;
+  gap: 1rem;
+  color: rgba(255,255,255,0.62);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* -------------------------
+   LABEL / TITRE DE CONTENU
+   ------------------------- */
+
+.unity-scene-label {
+  position: fixed;
+  left: 50%;
+  bottom: 2rem;
+  transform: translateX(-50%);
+  z-index: 15;
+  padding: 0.5rem 0.8rem;
+  color: rgba(255,255,255,0.86);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  background: rgba(0,0,0,0.28);
+  border: 1px solid rgba(255,255,255,0.12);
+  backdrop-filter: blur(8px);
+  pointer-events: none;
+}
+
+/* -------------------------
+   MESSAGE D’ERREUR UNITY
+   ------------------------- */
+
+.unity-error {
+  position: fixed;
+  left: 50%;
+  bottom: 2rem;
+  transform: translateX(-50%);
+  z-index: 40;
+  width: min(560px, calc(100vw - 2rem));
+  padding: 0.9rem 1rem;
+  color: #fff;
+  font-size: 0.82rem;
+  line-height: 1.5;
+  background: rgba(80, 0, 0, 0.82);
+  border: 1px solid rgba(255,255,255,0.16);
+  box-shadow: 0 0 24px rgba(0,0,0,0.3);
+}
+
+.unity-error.is-hidden {
+  display: none;
+}
+
+/* -------------------------
+   RESPONSIVE
+   ------------------------- */
+
+@media (max-width: 900px) {
+  .unity-loading-panel {
+    padding: 1rem;
+  }
+
+  .unity-loading-title {
+    font-size: 0.8rem;
+  }
+
+  .unity-loading-text {
+    font-size: 0.76rem;
+  }
+
+  .unity-scene-label {
+    bottom: 1rem;
+    font-size: 0.68rem;
+    max-width: calc(100vw - 2rem);
+    text-align: center;
+  }
 }

@@ -12,21 +12,26 @@
   align-items: flex-start;
 }
 
-.site-title {
-  display: inline-block;
+.site-title,
+h1.site-title,
+a.site-title,
+a.site-title:visited {
+  display: block;
+  margin: 0;
+  padding: 0;
   color: #fff;
   text-decoration: none;
-  font-size: 1.9rem;
-  line-height: 1;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  margin-bottom: 28px;
+  font-size: 3.4rem;
+  line-height: 0.9;
+  font-weight: 600;
+  letter-spacing: 0;
 }
 
 .zones-nav {
   display: flex;
   flex-direction: column;
   gap: 8px;
+  margin-top: 1.6rem;
 }
 
 .zone-link {

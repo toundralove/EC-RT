@@ -8,56 +8,6 @@ body {
   height: 100%;
 }
 
-.zone-layout {
-  display: flex;
-  min-height: 100vh;
-}
-
-.zone-sidebar {
-  width: 280px;
-  padding: 28px;
-  border-right: 1px solid rgba(255,255,255,0.12);
-  box-sizing: border-box;
-  background: #000;
-}
-
-.site-title {
-  display: inline-block;
-  color: white;
-  text-decoration: none;
-  font-size: 1.8rem;
-  line-height: 1;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  margin-bottom: 28px;
-}
-.zone-nav {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.zone-nav a {
-  color: rgba(255,255,255,0.72);
-  text-decoration: none;
-  font-size: 1rem;
-}
-
-.zone-nav a:hover,
-.zone-nav a.active {
-  color: #fff;
-}
-
-.zone-main {
-  flex: 1;
-  padding: 32px 40px;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 24px;
-}
-
 .unity-section {
   width: 100%;
   display: flex;

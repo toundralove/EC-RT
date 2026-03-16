@@ -1,5 +1,57 @@
-* 
-/* ZONE DROITE */
+/* =========================
+   HOME — VIEWER / MAP ONLY
+   Complément de :
+   - zone-core.css
+   - zone-sidebar.css
+   - zone-mobile.css
+   ========================= */
+
+/* -------------------------
+   SIDEBAR NAV SPECIFIC HOME
+   ------------------------- */
+
+.sections {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.section-link {
+  position: relative;
+  display: inline-block;
+  width: fit-content;
+  color: rgba(255, 255, 255, 0.62);
+  text-decoration: none;
+  font-size: 1rem;
+  line-height: 1.2;
+  transition:
+    color 180ms ease,
+    opacity 180ms ease,
+    transform 180ms ease;
+}
+
+.section-link:hover,
+.section-link:focus-visible {
+  color: #ffffff;
+  transform: translateX(2px);
+  outline: none;
+}
+
+.section-link.active {
+  color: #ffffff;
+}
+
+.section-link.active::before {
+  content: "•";
+  position: absolute;
+  left: -0.8rem;
+  top: 0;
+  color: #ffffff;
+}
+
+/* -------------------------
+   RIGHT PANEL / VIEWER
+   ------------------------- */
 
 .viewer {
   position: relative;
@@ -8,20 +60,30 @@
   justify-content: center;
   padding: 28px;
   overflow: auto;
+  min-height: 100vh;
   background:
-    radial-gradient(circle at center, rgba(255,255,255,0.015), rgba(255,255,255,0.002) 45%, transparent 70%),
+    radial-gradient(
+      circle at center,
+      rgba(255, 255, 255, 0.015),
+      rgba(255, 255, 255, 0.002) 45%,
+      transparent 70%
+    ),
     #000;
 }
+
+/* -------------------------
+   MAP WRAPPER
+   ------------------------- */
 
 .map-wrap {
   position: relative;
   width: min(1160px, 86vw);
   aspect-ratio: 1.53 / 1;
   background: #020202;
-  border: 1px solid rgba(255,255,255,0.06);
+  border: 1px solid rgba(255, 255, 255, 0.06);
   box-shadow:
-    inset 0 0 0 1px rgba(255,255,255,0.015),
-    0 0 34px rgba(255,255,255,0.03);
+    inset 0 0 0 1px rgba(255, 255, 255, 0.015),
+    0 0 34px rgba(255, 255, 255, 0.03);
   overflow: hidden;
 }
 
@@ -36,13 +98,19 @@
   user-select: none;
 }
 
+/* -------------------------
+   PLAN INTERACTION LAYER
+   ------------------------- */
+
 .plan-overlay {
   position: absolute;
   inset: 0;
   z-index: 5;
 }
 
-/* HALO FLOU */
+/* -------------------------
+   GLOW
+   ------------------------- */
 
 .zone-glow {
   position: absolute;
@@ -52,9 +120,9 @@
   border-radius: 12px;
   background: radial-gradient(
     circle at center,
-    rgba(255,255,255,0.16),
-    rgba(255,255,255,0.06) 38%,
-    rgba(255,255,255,0.0) 72%
+    rgba(255, 255, 255, 0.16),
+    rgba(255, 255, 255, 0.06) 38%,
+    rgba(255, 255, 255, 0) 72%
   );
   filter: blur(18px);
   transform: scale(0.92);
@@ -72,7 +140,9 @@
   transform: scale(1);
 }
 
-/* ZONES INTERACTIVES */
+/* -------------------------
+   HOVER ZONES
+   ------------------------- */
 
 .hover-zone {
   position: absolute;
@@ -89,23 +159,27 @@
     transform 220ms ease;
 }
 
-.hover-zone:hover {
-  border-color: var(--zone-border);
-  background: var(--zone-hover);
+.hover-zone:hover,
+.hover-zone:focus-visible {
+  border-color: var(--zone-border, rgba(255, 255, 255, 0.14));
+  background: var(--zone-hover, rgba(255, 255, 255, 0.04));
   box-shadow:
-    inset 0 0 0 1px rgba(255,255,255,0.03),
-    0 0 20px rgba(255,255,255,0.03);
+    inset 0 0 0 1px rgba(255, 255, 255, 0.03),
+    0 0 20px rgba(255, 255, 255, 0.03);
+  outline: none;
 }
 
 .hover-zone.active {
-  border-color: rgba(255,255,255,0.24);
-  background: var(--zone-active);
+  border-color: rgba(255, 255, 255, 0.24);
+  background: var(--zone-active, rgba(255, 255, 255, 0.06));
   box-shadow:
-    inset 0 0 0 1px rgba(255,255,255,0.04),
-    0 0 28px rgba(255,255,255,0.05);
+    inset 0 0 0 1px rgba(255, 255, 255, 0.04),
+    0 0 28px rgba(255, 255, 255, 0.05);
 }
 
-/* LOCATORS */
+/* -------------------------
+   LOCATORS
+   ------------------------- */
 
 .locator {
   position: absolute;
@@ -113,16 +187,19 @@
   pointer-events: none;
   opacity: 0;
   border-radius: 3px;
-  background:
-    linear-gradient(to bottom right, rgba(255,255,255,0.18), rgba(255,255,255,0.08));
-  border: 1px solid var(--locator-border);
+  background: linear-gradient(
+    to bottom right,
+    rgba(255, 255, 255, 0.18),
+    rgba(255, 255, 255, 0.08)
+  );
+  border: 1px solid var(--locator-border, rgba(255, 255, 255, 0.14));
   backdrop-filter: blur(9px);
   -webkit-backdrop-filter: blur(9px);
   transform: scale(0.96);
   box-shadow:
-    0 0 0 1px rgba(255,255,255,0.06),
-    0 0 24px rgba(255,255,255,0.06),
-    inset 0 0 10px rgba(255,255,255,0.05);
+    0 0 0 1px rgba(255, 255, 255, 0.06),
+    0 0 24px rgba(255, 255, 255, 0.06),
+    inset 0 0 10px rgba(255, 255, 255, 0.05);
   transition:
     opacity 240ms ease,
     transform 240ms ease,
@@ -133,7 +210,7 @@
   content: "";
   position: absolute;
   inset: 5px;
-  border: 1px solid rgba(255,255,255,0.14);
+  border: 1px solid rgba(255, 255, 255, 0.14);
   border-radius: 2px;
 }
 
@@ -141,10 +218,14 @@
   opacity: 1;
   transform: scale(1);
   box-shadow:
-    0 0 0 1px rgba(255,255,255,0.08),
-    0 0 34px rgba(255,255,255,0.1),
-    inset 0 0 14px rgba(255,255,255,0.06);
+    0 0 0 1px rgba(255, 255, 255, 0.08),
+    0 0 34px rgba(255, 255, 255, 0.1),
+    inset 0 0 14px rgba(255, 255, 255, 0.06);
 }
+
+/* -------------------------
+   CAPTION
+   ------------------------- */
 
 .plan-caption {
   position: absolute;
@@ -154,10 +235,13 @@
   font-size: 0.72rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.38);
+  color: rgba(255, 255, 255, 0.38);
+  pointer-events: none;
 }
 
-/* MAPPING DES 13 ZONES */
+/* -------------------------
+   ZONE MAPPING
+   ------------------------- */
 
 /* 1 */
 .zone-1  { left: 3.5%;  top: 41%;   width: 11%;  height: 20%; }
@@ -211,39 +295,15 @@
 .zone-13 { left: 69%;   top: 63%;   width: 20%;  height: 16%; }
 .loc-13  { left: 70%;   top: 64%;   width: 18%;  height: 14%; }
 
-/* RESPONSIVE */
-/* RESPONSIVE */
+/* -------------------------
+   RESPONSIVE — HOME ONLY
+   ------------------------- */
 
 @media (max-width: 980px) {
-  body {
-    overflow: auto;
-  }
-
-  .page {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto 1fr;
-    width: 100%;
-    min-height: 100vh;
-  }
-
-  .sidebar {
-    width: 100%;
-    min-width: 0;
-    height: auto;
-    border-right: none;
-    border-bottom: 1px solid var(--line);
-    padding: 20px 18px;
-  }
-
-  .sections {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-  }
-
   .viewer {
     padding: 18px;
     overflow: visible;
+    min-height: auto;
   }
 
   .map-wrap {
@@ -253,13 +313,8 @@
 }
 
 @media (max-width: 768px) {
-  .site-title {
-    font-size: 1.4rem;
-    margin-bottom: 18px;
-  }
-
   .sections {
-    gap: 4px;
+    gap: 0.2rem;
   }
 
   .section-link {
@@ -269,12 +324,9 @@
   }
 
   .section-link:hover,
+  .section-link:focus-visible,
   .section-link.active {
     transform: none;
-  }
-
-  .section-link::before {
-    left: -10px;
   }
 
   .viewer {
@@ -289,8 +341,8 @@
   }
 
   .plan-caption {
-    font-size: 0.62rem;
     left: 10px;
     bottom: 8px;
+    font-size: 0.62rem;
   }
 }

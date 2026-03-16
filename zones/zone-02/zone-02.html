@@ -1,67 +1,143 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Zone 02 — EC@RT</title>
 
+  <title>Zone 02 — Background — EC@RT</title>
+
+  <!-- Core layout -->
   <link rel="stylesheet" href="../zone-core.css" />
   <link rel="stylesheet" href="../zone-sidebar.css" />
+  <link rel="stylesheet" href="zone-02-unity.css" />
   <link rel="stylesheet" href="../zone_minimap.css" />
   <link rel="stylesheet" href="../zone-mobile.css" />
+
+  <!-- Unity layer -->
+  
 </head>
 
+
 <body data-zone="2">
-  <div id="unity-container">
-    <canvas id="unity-canvas"></canvas>
+
+
+<!-- ======================
+     UNITY BACKGROUND
+====================== -->
+
+<div id="unity-container">
+  <canvas id="unity-canvas"></canvas>
+</div>
+
+
+<!-- ======================
+     UNITY LOADING UI
+====================== -->
+
+<div class="unity-loading" id="unity-loading">
+
+  <div class="unity-loading-panel">
+
+    <h2 class="unity-loading-title">
+      EC@RT — Loading Environment
+    </h2>
+
+    <p class="unity-loading-text" id="unity-loading-text">
+      Initialisation de l'environnement numérique.
+    </p>
+
+    <div class="unity-progress">
+      <div class="unity-progress-bar" id="unity-progress-bar"></div>
+    </div>
+
+    <div class="unity-progress-meta">
+      <span>WebGL</span>
+      <span id="unity-progress-value">0%</span>
+    </div>
+
   </div>
 
-  <main class="page">
-    <aside class="sidebar">
-      <a href="../../index.html" class="site-title">EC@RT</a>
+</div>
 
-      <nav class="zones-nav" aria-label="Zones de l'exposition">
-        <a href="../zone-01/zone-01.html" class="zone-link" data-zone-link="1">Poster</a>
-        <a href="../zone-02/zone-02.html" class="zone-link" data-zone-link="2">Background</a>
-        <a href="../zone-03/zone-03.html" class="zone-link" data-zone-link="3">Anthropomorph</a>
-        <a href="../zone-04/zone-04.html" class="zone-link" data-zone-link="4">NWMV</a>
-        <a href="../zone-05/zone-05.html" class="zone-link" data-zone-link="5">Bad publications & mailers</a>
-        <a href="../zone-06/zone-06.html" class="zone-link" data-zone-link="6">VILE</a>
-        <a href="../zone-07/zone-07.html" class="zone-link" data-zone-link="7">Cazazza</a>
-        <a href="../zone-08/zone-08.html" class="zone-link" data-zone-link="8">Futurist Sound</a>
-        <a href="../zone-09/zone-09.html" class="zone-link" data-zone-link="9">Irène Dogmatic</a>
-        <a href="../zone-10/zone-10.html" class="zone-link" data-zone-link="10">COUM</a>
-        <a href="../zone-11/zone-11.html" class="zone-link" data-zone-link="11">491</a>
-        <a href="../zone-12/zone-12.html" class="zone-link" data-zone-link="12">MAD</a>
-        <a href="../zone-13/zone-13.html" class="zone-link" data-zone-link="13">Search and Destroy</a>
-      </nav>
-    </aside>
-  </main>
 
-  <aside class="mini-map" aria-label="Mini plan de navigation">
-    <a href="../../index.html" class="mini-map-title"></a>
+<!-- ======================
+     PAGE STRUCTURE
+====================== -->
 
-    <div class="mini-map-wrap">
-      <img src="../../assets/mini.png" alt="Mini plan de scénographie" class="mini-map-image" />
+<main class="page">
 
-      <a href="../zone-01/zone-01.html" class="mini-zone mini-zone-1" data-mini-zone="1" aria-label="Zone 1"></a>
-      <a href="../zone-02/zone-02.html" class="mini-zone mini-zone-2" data-mini-zone="2" aria-label="Zone 2"></a>
-      <a href="../zone-03/zone-03.html" class="mini-zone mini-zone-3" data-mini-zone="3" aria-label="Zone 3"></a>
-      <a href="../zone-04/zone-04.html" class="mini-zone mini-zone-4" data-mini-zone="4" aria-label="Zone 4"></a>
-      <a href="../zone-05/zone-05.html" class="mini-zone mini-zone-5" data-mini-zone="5" aria-label="Zone 5"></a>
-      <a href="../zone-06/zone-06.html" class="mini-zone mini-zone-6" data-mini-zone="6" aria-label="Zone 6"></a>
-      <a href="../zone-07/zone-07.html" class="mini-zone mini-zone-7" data-mini-zone="7" aria-label="Zone 7"></a>
-      <a href="../zone-08/zone-08.html" class="mini-zone mini-zone-8" data-mini-zone="8" aria-label="Zone 8"></a>
-      <a href="../zone-09/zone-09.html" class="mini-zone mini-zone-9" data-mini-zone="9" aria-label="Zone 9"></a>
-      <a href="../zone-10/zone-10.html" class="mini-zone mini-zone-10" data-mini-zone="10" aria-label="Zone 10"></a>
-      <a href="../zone-11/zone-11.html" class="mini-zone mini-zone-11" data-mini-zone="11" aria-label="Zone 11"></a>
-      <a href="../zone-12/zone-12.html" class="mini-zone mini-zone-12" data-mini-zone="12" aria-label="Zone 12"></a>
-      <a href="../zone-13/zone-13.html" class="mini-zone mini-zone-13" data-mini-zone="13" aria-label="Zone 13"></a>
-    </div>
+
+  <!-- SIDEBAR -->
+
+  <aside class="sidebar">
+
+    <a href="../../index.html" class="site-title">
+      EC@RT
+    </a>
+
+    <nav class="zones-nav" aria-label="Zones de l'exposition">
+
+      <a href="../zone-01/zone-01.html" class="zone-link" data-zone-link="1">Poster</a>
+      <a href="../zone-02/zone-02.html" class="zone-link" data-zone-link="2">Background</a>
+      <a href="../zone-03/zone-03.html" class="zone-link" data-zone-link="3">Anthropomorph</a>
+      <a href="../zone-04/zone-04.html" class="zone-link" data-zone-link="4">NWMV</a>
+      <a href="../zone-05/zone-05.html" class="zone-link" data-zone-link="5">
+        Bad publications & mailers </a>
+      <a href="../zone-06/zone-06.html" class="zone-link" data-zone-link="6">VILE</a>
+      <a href="../zone-07/zone-07.html" class="zone-link" data-zone-link="7">Cazazza</a>
+      <a href="../zone-08/zone-08.html" class="zone-link" data-zone-link="8">Futurist Sound</a>
+      <a href="../zone-09/zone-09.html" class="zone-link" data-zone-link="9">Irène Dogmatic</a>
+      <a href="../zone-10/zone-10.html" class="zone-link" data-zone-link="10">COUM</a>
+      <a href="../zone-11/zone-11.html" class="zone-link" data-zone-link="11">491</a>
+      <a href="../zone-12/zone-12.html" class="zone-link" data-zone-link="12">MAD</a>
+      <a href="../zone-13/zone-13.html" class="zone-link" data-zone-link="13">
+        Search and Destroy
+      </a>
+
+    </nav>
+
   </aside>
 
-  <script src="./unity-loader.js"></script>
-  <script src="zone_02.js"></script>
-  <script src="../minimap.js"></script>
+</main>
+
+
+<!-- ======================
+     MINI MAP
+====================== -->
+
+<aside class="mini-map" aria-label="Mini plan de navigation">
+<a href="../../index.html" class="mini-map-title"></a>
+ <div class="mini-map-wrap">
+
+    <img
+      src="../../assets/mini.png"
+      alt="Mini plan de scénographie"
+      class="mini-map-image"
+    />
+
+    <a href="../zone-01/zone-01.html" class="mini-zone mini-zone-1" data-mini-zone="1"></a>
+    <a href="../zone-02/zone-02.html" class="mini-zone mini-zone-2" data-mini-zone="2"></a>
+    <a href="../zone-03/zone-03.html" class="mini-zone mini-zone-3" data-mini-zone="3"></a>
+    <a href="../zone-04/zone-04.html" class="mini-zone mini-zone-4" data-mini-zone="4"></a>
+    <a href="../zone-05/zone-05.html" class="mini-zone mini-zone-5" data-mini-zone="5"></a>
+    <a href="../zone-06/zone-06.html" class="mini-zone mini-zone-6" data-mini-zone="6"></a>
+    <a href="../zone-07/zone-07.html" class="mini-zone mini-zone-7" data-mini-zone="7"></a>
+    <a href="../zone-08/zone-08.html" class="mini-zone mini-zone-8" data-mini-zone="8"></a>
+    <a href="../zone-09/zone-09.html" class="mini-zone mini-zone-9" data-mini-zone="9"></a>
+    <a href="../zone-10/zone-10.html" class="mini-zone mini-zone-10" data-mini-zone="10"></a>
+    <a href="../zone-11/zone-11.html" class="mini-zone mini-zone-11" data-mini-zone="11"></a>
+    <a href="../zone-12/zone-12.html" class="mini-zone mini-zone-12" data-mini-zone="12"></a>
+    <a href="../zone-13/zone-13.html" class="mini-zone mini-zone-13" data-mini-zone="13"></a>
+
+  </div>
+</aside>
+
+
+<script src="unity-loader.js"></script>
+<script src="zone_02.js"></script>
+<script src="../minimap.js"></script>
+
+
 </body>
 </html>

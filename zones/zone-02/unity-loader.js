@@ -1,15 +1,21 @@
 function loadUnity() {
   const buildPath = "../../unity/zone02/Build";
-
-  const loaderUrl = buildPath + "/build-mamco-compress.loader.js";
+  const loaderUrl = buildPath + "/build-mamco_compress.loader.js";
 
   const config = {
-    dataUrl: buildPath + "/build-mamco-compress.data",
-    frameworkUrl: buildPath + "/build-mamco-compress.framework.js",
-    codeUrl: buildPath + "/build-mamco-compress.wasm"
+    dataUrl: buildPath + "/build-mamco_compress.data.unityweb",
+    frameworkUrl: buildPath + "/build-mamco_compress.framework.js.unityweb",
+    codeUrl: buildPath + "/build-mamco_compress.wasm.unityweb",
+    streamingAssetsUrl: "StreamingAssets",
+    companyName: "DefaultCompany",
+    productName: "MAMCO",
+    productVersion: "1.0"
   };
 
   const canvas = document.querySelector("#unity-canvas");
+  const loading = document.getElementById("unity-loading");
+  const progressBar = document.getElementById("unity-progress-bar");
+  const progressValue = document.getElementById("unity-progress-value");
 
   if (!canvas) {
     console.error("Canvas Unity introuvable");
@@ -20,20 +26,25 @@ function loadUnity() {
   script.src = loaderUrl;
 
   script.onload = () => {
-    createUnityInstance(canvas, config)
+    createUnityInstance(canvas, config, (progress) => {
+      const percent = Math.round(progress * 100);
+      if (progressBar) progressBar.style.width = percent + "%";
+      if (progressValue) progressValue.textContent = percent + "%";
+    })
       .then(() => {
-        console.log("Unity chargée avec succès");
+        if (loading) loading.classList.add("is-hidden");
+        console.log("Unity chargée");
       })
       .catch((err) => {
-        console.error("Erreur createUnityInstance :", err);
+        console.error("Erreur Unity :", err);
       });
   };
 
   script.onerror = () => {
-    console.error("Impossible de charger le loader Unity :", loaderUrl);
+    console.error("Loader Unity introuvable :", loaderUrl);
   };
 
   document.body.appendChild(script);
 }
 
-loadUnity();
+window.addEventListener("load", loadUnity);
