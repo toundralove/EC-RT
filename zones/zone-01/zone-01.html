@@ -6,6 +6,8 @@
   <title>Zone 01 — ECART</title>
   <link rel="stylesheet" href="../zone-core.css" />
   <link rel="stylesheet" href="../zone-sidebar.css" />
+  <link rel="stylesheet" href="../zone-01/zone-01-audio.css" />
+  <link rel="stylesheet" href="../zone-01/zone_01_i" />
   <link rel="stylesheet" href="../zone_minimap.css" />
   <link rel="stylesheet" href="../zone-mobile.css" />
 </head>
@@ -32,11 +34,27 @@
       </nav>
     </aside>
 
-    <section class="content">
-      <div class="image-viewer" id="imageViewer">
-        <img src="../../assets/images/zone-01-affiche.jpeg" class="zoom-image" id="zoomImage" alt="Affiche zone 01">
-      </div>
-    </section>
+  <div class="viewer">
+  <button class="audio-toggle" id="audioToggle" aria-label="Lancer l'audio-description">
+    <span class="audio-icon">🔊</span>
+    <span class="audio-text">audio description</span>
+  </button>
+
+  <audio id="posterAudio" preload="auto">
+    <source src="../../assets/son/AD_Poster.wav" type="audio/wav">
+    Votre navigateur ne supporte pas l’audio.
+  </audio>
+
+  <div class="image-viewer" id="imageViewer">
+    <img
+      src="../../assets/images/zone-01-affiche.jpeg"
+      class="zoom-image"
+      id="zoomImage"
+      alt="Affiche zone 01"
+      draggable="false"
+    >
+  </div>
+</div>
   </main>
 
   <aside class="mini-map" aria-label="Mini plan de navigation">
@@ -60,7 +78,8 @@
     </div>
   </aside>
 
-  <script src="zone_01.js"></script>
+  <script src="zone_01_nav.js"></script>
+  <script src="zone-01-audio.js"></script>
   <script src="../minimap.js"></script>
 </body>
 </html>
