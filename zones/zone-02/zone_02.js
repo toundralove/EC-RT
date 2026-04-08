@@ -1,10 +1,10 @@
-const buildUrl = "../unity/zone02/Build";
+const buildUrl = "../../unity/zone02-V2/Build";
 
 const config = {
-  dataUrl: buildUrl + "/build-mamco.data.br",
-  frameworkUrl: buildUrl + "/build-mamco.framework.js.br",
-  codeUrl: buildUrl + "/build-mamco.wasm.br",
-  streamingAssetsUrl: "../unity/zone02/StreamingAssets",
+  dataUrl: buildUrl + "/build-mamco_compress.data.br",
+  frameworkUrl: buildUrl + "/build-mamco_compress.framework.js.br",
+  codeUrl: buildUrl + "/build-mamco_compress.wasm.br",
+  streamingAssetsUrl: "../unity/zone02-V2/StreamingAssets",
   companyName: "ECART",
   productName: "Zone02",
   productVersion: "1.0",
@@ -28,7 +28,7 @@ function unityShowBanner(message, type) {
 }
 
 const script = document.createElement("script");
-script.src = buildUrl + "/build-mamco.loader.js";
+script.src = buildUrl + "/build-mamco_compress.loader.js";
 
 script.onload = () => {
   createUnityInstance(canvas, config, (progress) => {

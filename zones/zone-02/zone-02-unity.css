@@ -20,8 +20,10 @@ body {
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-  z-index: 0;
+  z-index: 1;
   background: #000;
+  pointer-events: auto;
+  touch-action: none;
 }
 
 #unity-canvas {
@@ -30,6 +32,8 @@ body {
   height: 100%;
   background: #000;
   outline: none;
+   pointer-events: auto;
+   touch-action: none;
 }
 
 /* Optionnel : léger voile pour lisibilité du contenu HTML */
@@ -56,8 +60,18 @@ body {
 .mini-map,
 .site-title,
 .zones-nav {
-  position: relative;
-  z-index: 10;
+  pointer-events: none;
+}
+
+.sidebar a,
+.site-title a,
+.mini-map a,
+.zones-nav a,
+button,
+input,
+textarea,
+select {
+  pointer-events: auto;
 }
 
 /* -------------------------

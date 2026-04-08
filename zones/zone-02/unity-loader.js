@@ -1,5 +1,5 @@
 function loadUnity() {
-  const buildPath = "../../unity/zone02/Build";
+  const buildPath = "../../unity/zone02-V2/Build";
   const loaderUrl = buildPath + "/build-mamco_compress.loader.js";
 
   const config = {
