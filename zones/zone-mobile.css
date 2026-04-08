@@ -116,4 +116,99 @@
     width: calc(100% - 20px);
     margin: 10px;
   }
+
+  /* =========================
+   MOBILE OVERRIDE FOR UNITY ZONES
+   ========================= */
+
+@media (max-width: 980px), (orientation: portrait) {
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: #000;
+    touch-action: none;
+    overscroll-behavior: none;
+  }
+
+  body {
+    min-height: 100vh;
+    min-height: 100dvh;
+  }
+
+  /* Le layout éditorial ne doit plus structurer la page */
+  .page {
+    display: block !important;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+  }
+
+  /* On masque les couches qui coupent l'écran */
+  .sidebar,
+  .zones-nav,
+  .mini-map,
+  .zone-main,
+  .zone-content,
+  .zone-frame {
+    display: none !important;
+  }
+
+  /* Option : garder juste le titre retour */
+  .site-title {
+    position: fixed;
+    top: 14px;
+    left: 14px;
+    z-index: 30;
+    margin: 0;
+    pointer-events: none;
+  }
+
+  .site-title a {
+    pointer-events: auto;
+  }
+
+  /* Unity plein écran */
+  #unity-container {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh;
+    overflow: hidden;
+    z-index: 1;
+    background: #000;
+    pointer-events: auto;
+    touch-action: none;
+  }
+
+  #unity-canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    pointer-events: auto;
+    touch-action: none;
+  }
+
+  /* Les couches HTML ne doivent pas bloquer Unity */
+  .page,
+  .site-title {
+    pointer-events: none;
+  }
+
+  .site-title a,
+  button,
+  .unity-loading-panel {
+    pointer-events: auto;
+  }
+
+  /* Retire le voile si tu veux éviter toute gêne visuelle/tactile */
+  #unity-container::after {
+    background: transparent;
+  }
+}
 }
