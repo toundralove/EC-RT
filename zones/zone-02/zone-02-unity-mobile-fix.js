@@ -9,15 +9,29 @@ function initUnityMobileFix() {
 
   canvas.tabIndex = 1;
 
+  const UNITY_ASPECT = 16 / 9; // adapte si ta scène a un autre ratio
+
   function resizeUnityCanvas() {
-    const w = window.innerWidth;
-    const h = window.innerHeight;
+    const screenW = window.innerWidth;
+    const screenH = window.innerHeight;
 
-    container.style.width = w + "px";
-    container.style.height = h + "px";
+    let canvasW = screenW;
+    let canvasH = screenW / UNITY_ASPECT;
 
-    canvas.style.width = w + "px";
-    canvas.style.height = h + "px";
+    if (canvasH > screenH) {
+      canvasH = screenH;
+      canvasW = screenH * UNITY_ASPECT;
+    }
+
+    container.style.width = screenW + "px";
+    container.style.height = screenH + "px";
+
+    canvas.style.width = canvasW + "px";
+    canvas.style.height = canvasH + "px";
+    canvas.style.position = "absolute";
+    canvas.style.left = "50%";
+    canvas.style.top = "50%";
+    canvas.style.transform = "translate(-50%, -50%)";
   }
 
   function focusCanvas() {
