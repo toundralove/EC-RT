@@ -30,7 +30,7 @@ if (currentZone) {
 }
 
 zoneLinks.forEach(link => {
-  const zoneId = link.dataset.zoneLink;
+  const zoneId = zone.dataset.miniZone;
 
   link.addEventListener('mouseenter', () => {
     if (zoneId) setHoveredZone(zoneId);

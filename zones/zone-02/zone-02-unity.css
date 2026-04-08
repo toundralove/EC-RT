@@ -18,6 +18,54 @@ body {
   overflow: hidden;
 }
 
+.rotate-device-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(0, 0, 0, 0.92);
+  backdrop-filter: blur(8px);
+}
+
+.rotate-device-panel {
+  max-width: 320px;
+  padding: 18px 20px;
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(255,255,255,0.04);
+  color: #fff;
+  text-align: center;
+  font-size: 0.92rem;
+  line-height: 1.5;
+  letter-spacing: 0.03em;
+}
+
+/* Mobile portrait : on masque la scène */
+@media (max-width: 980px) and (orientation: portrait) {
+  #unity-container {
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  .rotate-device-overlay {
+    display: flex;
+  }
+}
+
+/* Mobile paysage : on laisse la scène visible */
+@media (max-width: 980px) and (orientation: landscape) {
+  #unity-container {
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  .rotate-device-overlay {
+    display: none;
+  }
+}
+
 /* -------------------------
    UNITY
    ------------------------- */
