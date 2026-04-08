@@ -1,50 +1,51 @@
 function initUnityMobileFix() {
   const canvas = document.getElementById("unity-canvas");
+  const container = document.getElementById("unity-container");
 
-  if (!canvas) {
-    console.warn("Unity canvas introuvable");
+  if (!canvas || !container) {
+    console.warn("Unity canvas ou container introuvable");
     return;
   }
 
-  // Permet de donner le focus au canvas
   canvas.tabIndex = 1;
 
-  // 👉 Redimensionnement correct (important mobile)
   function resizeUnityCanvas() {
     const w = window.innerWidth;
     const h = window.innerHeight;
+
+    container.style.width = w + "px";
+    container.style.height = h + "px";
 
     canvas.style.width = w + "px";
     canvas.style.height = h + "px";
   }
 
-  // 👉 Focus quand on clique / touche
-  canvas.addEventListener("click", () => {
+  function focusCanvas() {
     canvas.focus();
-  });
+  }
 
-  canvas.addEventListener("touchstart", () => {
-    canvas.focus();
-  }, { passive: true });
+  canvas.addEventListener("click", focusCanvas);
+  canvas.addEventListener("touchstart", focusCanvas, { passive: true });
 
-  // 👉 Empêche le scroll de la page de casser le zoom Unity
   canvas.addEventListener("wheel", (e) => {
     e.preventDefault();
   }, { passive: false });
 
-  // 👉 Empêche le scroll tactile sur mobile
   document.addEventListener("touchmove", (e) => {
-    if (e.target === canvas) {
+    if (e.target === canvas || canvas.contains(e.target)) {
       e.preventDefault();
     }
   }, { passive: false });
 
-  // 👉 Resize écran / rotation téléphone
   window.addEventListener("resize", resizeUnityCanvas);
-  window.addEventListener("orientationchange", resizeUnityCanvas);
+  window.addEventListener("orientationchange", () => {
+    setTimeout(resizeUnityCanvas, 250);
+  });
 
-  // 👉 Initialisation
   resizeUnityCanvas();
+  focusCanvas();
 
   console.log("Unity mobile fix activé");
 }
+
+window.addEventListener("load", initUnityMobileFix);

@@ -31,9 +31,13 @@ function loadUnity() {
       if (progressBar) progressBar.style.width = percent + "%";
       if (progressValue) progressValue.textContent = percent + "%";
     })
-      .then(() => {
+      .then((unityInstance) => {
         if (loading) loading.classList.add("is-hidden");
         console.log("Unity chargée");
+
+        if (typeof initUnityMobileFix === "function") {
+          initUnityMobileFix();
+        }
       })
       .catch((err) => {
         console.error("Erreur Unity :", err);

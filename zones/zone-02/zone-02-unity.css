@@ -1,9 +1,7 @@
 /* =========================
-   UNITY CONTENT LAYER
-   À ajouter sur toutes les zones
+   ZONE UNITY — EC@RT
    ========================= */
 
-/* Le body doit pouvoir accueillir un fond Unity fixe */
 html,
 body {
   margin: 0;
@@ -21,7 +19,7 @@ body {
 }
 
 /* -------------------------
-   CONTENEUR UNITY
+   UNITY
    ------------------------- */
 
 #unity-container {
@@ -29,6 +27,7 @@ body {
   inset: 0;
   width: 100vw;
   height: 100vh;
+  height: 100dvh;
   overflow: hidden;
   z-index: 1;
   background: #000;
@@ -42,11 +41,10 @@ body {
   height: 100%;
   background: #000;
   outline: none;
-   pointer-events: auto;
-   touch-action: none;
+  pointer-events: auto;
+  touch-action: none;
 }
 
-/* Optionnel : léger voile pour lisibilité du contenu HTML */
 #unity-container::after {
   content: "";
   position: absolute;
@@ -62,7 +60,7 @@ body {
 }
 
 /* -------------------------
-   HIÉRARCHIE DES CALQUES
+   CALQUES HTML
    ------------------------- */
 
 .page,
@@ -78,7 +76,6 @@ body {
   pointer-events: none;
 }
 
-/* Seuls les vrais éléments interactifs récupèrent les clics */
 .sidebar a,
 .sidebar button,
 .sidebar input,
@@ -91,14 +88,15 @@ body {
 button {
   pointer-events: auto;
 }
+
 /* -------------------------
-   OVERLAY DE CHARGEMENT UNITY
+   LOADING
    ------------------------- */
 
 .unity-loading {
   position: fixed;
   inset: 0;
-  z-index: 12;
+  z-index: 20;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -154,20 +152,8 @@ button {
   transition: width 0.22s ease;
 }
 
-.unity-progress-meta {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 0.65rem;
-  gap: 1rem;
-  color: rgba(255,255,255,0.62);
-  font-size: 0.72rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
 /* -------------------------
-   LABEL / TITRE DE CONTENU
+   LABEL
    ------------------------- */
 
 .unity-scene-label {
@@ -188,7 +174,7 @@ button {
 }
 
 /* -------------------------
-   MESSAGE D’ERREUR UNITY
+   ERROR
    ------------------------- */
 
 .unity-error {
@@ -234,18 +220,89 @@ button {
     max-width: calc(100vw - 2rem);
     text-align: center;
   }
-
-  /* Seuls les vrais éléments interactifs récupèrent les clics */
-.sidebar a,
-.sidebar button,
-.sidebar input,
-.sidebar textarea,
-.sidebar select,
-.site-title a,
-.mini-map a,
-.zones-nav a,
-.zone-link,
-button {
-  pointer-events: auto;
 }
+
+/* -------------------------
+   MOBILE UNITY MODE
+   ------------------------- */
+
+@media (max-width: 980px), (orientation: portrait) {
+  html,
+  body {
+    overflow: hidden;
+    touch-action: none;
+    overscroll-behavior: none;
+  }
+
+  body {
+    min-height: 100vh;
+    min-height: 100dvh;
+  }
+
+  .page {
+    display: block !important;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+  }
+
+  .sidebar,
+  .zones-nav,
+  .mini-map,
+  .zone-main,
+  .zone-content,
+  .zone-frame {
+    display: none !important;
+  }
+
+  .site-title {
+    position: fixed;
+    top: 14px;
+    left: 14px;
+    z-index: 30;
+    margin: 0;
+    pointer-events: none;
+  }
+
+  .site-title a {
+    pointer-events: auto;
+  }
+
+  #unity-container {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh;
+    z-index: 1;
+    pointer-events: auto;
+    touch-action: none;
+  }
+
+  #unity-canvas {
+    width: 100%;
+    height: 100%;
+    pointer-events: auto;
+    touch-action: none;
+  }
+
+  #unity-container::after {
+    background: transparent;
+  }
+
+  .unity-loading {
+    z-index: 35;
+    padding: 1rem;
+  }
+
+  .unity-loading-panel {
+    width: min(92vw, 420px);
+  }
+
+  .unity-scene-label {
+    bottom: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 25;
+  }
 }

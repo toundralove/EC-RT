@@ -116,10 +116,7 @@
     width: calc(100% - 20px);
     margin: 10px;
   }
-
-  /* =========================
-   MOBILE OVERRIDE FOR UNITY ZONES
-   ========================= */
+}
 
 @media (max-width: 980px), (orientation: portrait) {
   html,
@@ -139,7 +136,6 @@
     min-height: 100dvh;
   }
 
-  /* Le layout éditorial ne doit plus structurer la page */
   .page {
     display: block !important;
     width: 100%;
@@ -147,7 +143,6 @@
     pointer-events: none;
   }
 
-  /* On masque les couches qui coupent l'écran */
   .sidebar,
   .zones-nav,
   .mini-map,
@@ -157,7 +152,6 @@
     display: none !important;
   }
 
-  /* Option : garder juste le titre retour */
   .site-title {
     position: fixed;
     top: 14px;
@@ -171,7 +165,6 @@
     pointer-events: auto;
   }
 
-  /* Unity plein écran */
   #unity-container {
     position: fixed;
     inset: 0;
@@ -194,7 +187,6 @@
     touch-action: none;
   }
 
-  /* Les couches HTML ne doivent pas bloquer Unity */
   .page,
   .site-title {
     pointer-events: none;
@@ -206,9 +198,7 @@
     pointer-events: auto;
   }
 
-  /* Retire le voile si tu veux éviter toute gêne visuelle/tactile */
   #unity-container::after {
     background: transparent;
   }
-}
 }
