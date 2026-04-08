@@ -36,10 +36,12 @@ script.onload = () => {
   })
     .then(() => {
       loadingBar.style.display = "none";
+          initUnityMobileFix()
     })
     .catch((message) => {
       unityShowBanner("Erreur Unity : " + message, "error");
     });
+;
 };
 
 script.onerror = () => {
