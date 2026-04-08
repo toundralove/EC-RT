@@ -4,10 +4,20 @@
    ========================= */
 
 /* Le body doit pouvoir accueillir un fond Unity fixe */
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  background: #000;
+}
+
 body {
   position: relative;
   min-height: 100vh;
-  background: #000;
+  min-height: 100dvh;
+  overflow: hidden;
 }
 
 /* -------------------------
@@ -59,21 +69,28 @@ body {
 .sidebar,
 .mini-map,
 .site-title,
-.zones-nav {
+.zones-nav,
+.zone-main,
+.zone-content,
+.zone-frame {
+  position: relative;
+  z-index: 10;
   pointer-events: none;
 }
 
+/* Seuls les vrais éléments interactifs récupèrent les clics */
 .sidebar a,
+.sidebar button,
+.sidebar input,
+.sidebar textarea,
+.sidebar select,
 .site-title a,
 .mini-map a,
 .zones-nav a,
-button,
-input,
-textarea,
-select {
+.zone-link,
+button {
   pointer-events: auto;
 }
-
 /* -------------------------
    OVERLAY DE CHARGEMENT UNITY
    ------------------------- */
@@ -217,4 +234,18 @@ select {
     max-width: calc(100vw - 2rem);
     text-align: center;
   }
+
+  /* Seuls les vrais éléments interactifs récupèrent les clics */
+.sidebar a,
+.sidebar button,
+.sidebar input,
+.sidebar textarea,
+.sidebar select,
+.site-title a,
+.mini-map a,
+.zones-nav a,
+.zone-link,
+button {
+  pointer-events: auto;
+}
 }
