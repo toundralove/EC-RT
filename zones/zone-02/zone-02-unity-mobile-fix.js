@@ -1,6 +1,7 @@
 function initUnityMobileFix() {
   const canvas = document.getElementById("unity-canvas");
   const container = document.getElementById("unity-container");
+  const rotateOverlay = document.getElementById("rotate-device-overlay");
 
   if (!canvas || !container) {
     console.warn("Unity canvas ou container introuvable");
@@ -9,11 +10,36 @@ function initUnityMobileFix() {
 
   canvas.tabIndex = 1;
 
-  const UNITY_ASPECT = 16 / 9; // adapte si ta scène a un autre ratio
+  const UNITY_ASPECT = 16 / 9;
+
+  function isMobile() {
+    return window.innerWidth <= 980;
+  }
+
+  function isPortrait() {
+    return window.matchMedia("(orientation: portrait)").matches;
+  }
 
   function resizeUnityCanvas() {
     const screenW = window.innerWidth;
     const screenH = window.innerHeight;
+
+    container.style.width = screenW + "px";
+    container.style.height = screenH + "px";
+
+    if (isMobile() && isPortrait()) {
+      canvas.style.width = "0px";
+      canvas.style.height = "0px";
+      canvas.style.position = "absolute";
+      canvas.style.left = "50%";
+      canvas.style.top = "50%";
+      canvas.style.transform = "translate(-50%, -50%)";
+
+      if (rotateOverlay) {
+        rotateOverlay.setAttribute("aria-hidden", "false");
+      }
+      return;
+    }
 
     let canvasW = screenW;
     let canvasH = screenW / UNITY_ASPECT;
@@ -23,15 +49,16 @@ function initUnityMobileFix() {
       canvasW = screenH * UNITY_ASPECT;
     }
 
-    container.style.width = screenW + "px";
-    container.style.height = screenH + "px";
-
     canvas.style.width = canvasW + "px";
     canvas.style.height = canvasH + "px";
     canvas.style.position = "absolute";
     canvas.style.left = "50%";
     canvas.style.top = "50%";
     canvas.style.transform = "translate(-50%, -50%)";
+
+    if (rotateOverlay) {
+      rotateOverlay.setAttribute("aria-hidden", "true");
+    }
   }
 
   function focusCanvas() {
@@ -53,13 +80,13 @@ function initUnityMobileFix() {
 
   window.addEventListener("resize", resizeUnityCanvas);
   window.addEventListener("orientationchange", () => {
-    setTimeout(resizeUnityCanvas, 250);
+    setTimeout(() => {
+      resizeUnityCanvas();
+      focusCanvas();
+    }, 300);
   });
 
   resizeUnityCanvas();
-  focusCanvas();
-
-  console.log("Unity mobile fix activé");
 }
 
 window.addEventListener("load", initUnityMobileFix);
