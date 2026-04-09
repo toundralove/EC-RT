@@ -12,10 +12,11 @@ function loadUnity() {
     productVersion: "1.0"
   };
 
-  const canvas = document.querySelector("#unity-canvas");
+  const canvas = document.getElementById("unity-canvas");
   const loading = document.getElementById("unity-loading");
   const progressBar = document.getElementById("unity-progress-bar");
   const progressValue = document.getElementById("unity-progress-value");
+  const warning = document.getElementById("unity-warning");
 
   if (!canvas) {
     console.error("Canvas Unity introuvable");
@@ -31,21 +32,27 @@ function loadUnity() {
       if (progressBar) progressBar.style.width = percent + "%";
       if (progressValue) progressValue.textContent = percent + "%";
     })
-      .then((unityInstance) => {
+      .then(() => {
         if (loading) loading.classList.add("is-hidden");
-        console.log("Unity chargée");
-
         if (typeof initUnityMobileFix === "function") {
           initUnityMobileFix();
         }
       })
       .catch((err) => {
         console.error("Erreur Unity :", err);
+        if (warning) {
+          warning.textContent = "Impossible de charger la scène Unity.";
+          warning.classList.add("show");
+        }
       });
   };
 
   script.onerror = () => {
     console.error("Loader Unity introuvable :", loaderUrl);
+    if (warning) {
+      warning.textContent = "Loader Unity introuvable.";
+      warning.classList.add("show");
+    }
   };
 
   document.body.appendChild(script);

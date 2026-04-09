@@ -1,10 +1,10 @@
 const currentZone = document.body.dataset.zone;
-const zoneLinks = document.querySelectorAll('.zone-link');
-const miniZones = document.querySelectorAll('.mini-zone');
+const zoneLinks = document.querySelectorAll(".zone-link");
+const miniZones = document.querySelectorAll(".mini-zone");
 
 function clearHoverStates() {
-  zoneLinks.forEach(link => link.classList.remove('is-hovered'));
-  miniZones.forEach(zone => zone.classList.remove('is-hovered'));
+  zoneLinks.forEach((link) => link.classList.remove("is-hovered"));
+  miniZones.forEach((zone) => zone.classList.remove("is-hovered"));
 }
 
 function setHoveredZone(zoneId) {
@@ -12,43 +12,39 @@ function setHoveredZone(zoneId) {
 
   document
     .querySelectorAll(`.zone-link[data-zone-link="${zoneId}"]`)
-    .forEach(link => link.classList.add('is-hovered'));
+    .forEach((link) => link.classList.add("is-hovered"));
 
   document
-    .querySelectorAll(`.mini-zone[data-zone-link="${zoneId}"]`)
-    .forEach(zone => zone.classList.add('is-hovered'));
+    .querySelectorAll(`.mini-zone[data-mini-zone="${zoneId}"]`)
+    .forEach((zone) => zone.classList.add("is-hovered"));
 }
 
 if (currentZone) {
   document
     .querySelectorAll(`.zone-link[data-zone-link="${currentZone}"]`)
-    .forEach(link => link.classList.add('active'));
+    .forEach((link) => link.classList.add("active"));
 
   document
-    .querySelectorAll(`.mini-zone[data-zone-link="${currentZone}"]`)
-    .forEach(zone => zone.classList.add('active'));
+    .querySelectorAll(`.mini-zone[data-mini-zone="${currentZone}"]`)
+    .forEach((zone) => zone.classList.add("active"));
 }
 
-zoneLinks.forEach(link => {
-  const zoneId = zone.dataset.miniZone;
+zoneLinks.forEach((link) => {
+  const zoneId = link.dataset.zoneLink;
 
-  link.addEventListener('mouseenter', () => {
+  link.addEventListener("mouseenter", () => {
     if (zoneId) setHoveredZone(zoneId);
   });
 
-  link.addEventListener('mouseleave', () => {
-    clearHoverStates();
-  });
+  link.addEventListener("mouseleave", clearHoverStates);
 });
 
-miniZones.forEach(zone => {
-  const zoneId = zone.dataset.zoneLink;
+miniZones.forEach((zone) => {
+  const zoneId = zone.dataset.miniZone;
 
-  zone.addEventListener('mouseenter', () => {
+  zone.addEventListener("mouseenter", () => {
     if (zoneId) setHoveredZone(zoneId);
   });
 
-  zone.addEventListener('mouseleave', () => {
-    clearHoverStates();
-  });
+  zone.addEventListener("mouseleave", clearHoverStates);
 });
