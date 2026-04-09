@@ -29,6 +29,7 @@ function goToZone(id) {
 
 function bindHover(el) {
   const id = el.dataset.section;
+  if (!id) return;
 
   el.addEventListener('mouseenter', () => setActive(id));
   el.addEventListener('focus', () => setActive(id));
@@ -38,6 +39,7 @@ function bindHover(el) {
 
 function bindZoneClick(zone) {
   const id = zone.dataset.section;
+  if (!id) return;
 
   zone.addEventListener('click', (event) => {
     event.preventDefault();
@@ -48,3 +50,18 @@ function bindZoneClick(zone) {
 links.forEach(bindHover);
 zones.forEach(bindHover);
 zones.forEach(bindZoneClick);
+
+/* mobile menu */
+const menuToggle = document.querySelector('.menu-toggle');
+
+if (menuToggle) {
+  menuToggle.addEventListener('click', () => {
+    if (window.innerWidth <= 768 && document.body.classList.contains('has-mobile-menu')) {
+      document.body.classList.toggle('menu-open');
+      menuToggle.setAttribute(
+        'aria-expanded',
+        document.body.classList.contains('menu-open') ? 'true' : 'false'
+      );
+    }
+  });
+}

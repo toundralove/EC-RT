@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Zone 03 — EC@RT</title>
 
   <link rel="stylesheet" href="../zone-core.css" />
@@ -11,10 +11,21 @@
   <link rel="stylesheet" href="../zone-mobile.css" />
 </head>
 
-<body data-zone="3">
+<body data-zone="3" class="has-mobile-menu">
   <main class="page">
     <aside class="sidebar">
-      <a href="../../index.html" class="site-title">EC@RT</a>
+      <div class="sidebar-top">
+        <a href="../../index.html" class="home-button" aria-label="Retour à l’accueil">⌂</a>
+
+        <button
+          class="site-title menu-toggle"
+          type="button"
+          aria-expanded="false"
+          aria-label="Ouvrir ou fermer le menu"
+        >
+          EC@RT
+        </button>
+      </div>
 
       <nav class="zones-nav" aria-label="Zones de l'exposition">
         <a href="../zone-01/zone-01.html" class="zone-link" data-zone-link="1">Poster</a>
@@ -53,22 +64,84 @@
         class="mini-map-image"
       />
 
-      <a href="../zone-01/zone-01.html" class="mini-zone mini-zone-1" data-zone-link="1" aria-label="Zone 1"></a>
-      <a href="../zone-02/zone-02.html" class="mini-zone mini-zone-2" data-zone-link="2" aria-label="Zone 2"></a>
-      <a href="../zone-03/zone-03.html" class="mini-zone mini-zone-3" data-zone-link="3" aria-label="Zone 3"></a>
-      <a href="../zone-04/zone-04.html" class="mini-zone mini-zone-4" data-zone-link="4" aria-label="Zone 4"></a>
-      <a href="../zone-05/zone-05.html" class="mini-zone mini-zone-5" data-zone-link="5" aria-label="Zone 5"></a>
-      <a href="../zone-06/zone-06.html" class="mini-zone mini-zone-6" data-zone-link="6" aria-label="Zone 6"></a>
-      <a href="../zone-07/zone-07.html" class="mini-zone mini-zone-7" data-zone-link="7" aria-label="Zone 7"></a>
-      <a href="../zone-08/zone-08.html" class="mini-zone mini-zone-8" data-zone-link="8" aria-label="Zone 8"></a>
-      <a href="../zone-09/zone-09.html" class="mini-zone mini-zone-9" data-zone-link="9" aria-label="Zone 9"></a>
-      <a href="../zone-10/zone-10.html" class="mini-zone mini-zone-10" data-zone-link="10" aria-label="Zone 10"></a>
-      <a href="../zone-11/zone-11.html" class="mini-zone mini-zone-11" data-zone-link="11" aria-label="Zone 11"></a>
-      <a href="../zone-12/zone-12.html" class="mini-zone mini-zone-12" data-zone-link="12" aria-label="Zone 12"></a>
-      <a href="../zone-13/zone-13.html" class="mini-zone mini-zone-13" data-zone-link="13" aria-label="Zone 13"></a>
+      <a href="../zone-01/zone-01.html" class="mini-zone mini-zone-1" data-mini-zone="1" aria-label="Zone 1"></a>
+      <a href="../zone-02/zone-02.html" class="mini-zone mini-zone-2" data-mini-zone="2" aria-label="Zone 2"></a>
+      <a href="../zone-03/zone-03.html" class="mini-zone mini-zone-3" data-mini-zone="3" aria-label="Zone 3"></a>
+      <a href="../zone-04/zone-04.html" class="mini-zone mini-zone-4" data-mini-zone="4" aria-label="Zone 4"></a>
+      <a href="../zone-05/zone-05.html" class="mini-zone mini-zone-5" data-mini-zone="5" aria-label="Zone 5"></a>
+      <a href="../zone-06/zone-06.html" class="mini-zone mini-zone-6" data-mini-zone="6" aria-label="Zone 6"></a>
+      <a href="../zone-07/zone-07.html" class="mini-zone mini-zone-7" data-mini-zone="7" aria-label="Zone 7"></a>
+      <a href="../zone-08/zone-08.html" class="mini-zone mini-zone-8" data-mini-zone="8" aria-label="Zone 8"></a>
+      <a href="../zone-09/zone-09.html" class="mini-zone mini-zone-9" data-mini-zone="9" aria-label="Zone 9"></a>
+      <a href="../zone-10/zone-10.html" class="mini-zone mini-zone-10" data-mini-zone="10" aria-label="Zone 10"></a>
+      <a href="../zone-11/zone-11.html" class="mini-zone mini-zone-11" data-mini-zone="11" aria-label="Zone 11"></a>
+      <a href="../zone-12/zone-12.html" class="mini-zone mini-zone-12" data-mini-zone="12" aria-label="Zone 12"></a>
+      <a href="../zone-13/zone-13.html" class="mini-zone mini-zone-13" data-mini-zone="13" aria-label="Zone 13"></a>
     </div>
   </aside>
 
+  <button
+  id="mobileMapToggle"
+  class="mobile-map-toggle"
+  type="button"
+  aria-expanded="false"
+  aria-controls="mobileMapPanel"
+  aria-label="Ouvrir la carte"
+>
+  map
+</button>
+
+<div
+  id="mobileMapPanel"
+  class="mobile-map-panel"
+  aria-hidden="true"
+>
+  <div class="mobile-map-panel-inner">
+
+    <div class="mobile-map-topbar">
+      <p class="mobile-map-heading">Navigation</p>
+      <button
+        id="mobileMapClose"
+        class="mobile-map-close"
+        type="button"
+        aria-label="Fermer la carte"
+      >
+        ✕
+      </button>
+    </div>
+
+    <div id="mobileMapStatus" class="mobile-map-status">
+      Sélectionne une zone.
+    </div>
+
+    <div class="mobile-map-figure">
+      <div class="mini-map-wrap">
+        <img
+          src="../../assets/mini.png"
+          alt="Mini plan de scénographie"
+          class="mini-map-image"
+        />
+
+        <a href="../zone-01/zone-01.html" class="mini-zone mini-zone-1" data-mini-zone="1" data-zone-name="Poster" aria-label="Vers Poster"></a>
+        <a href="../zone-02/zone-02.html" class="mini-zone mini-zone-2" data-mini-zone="2" data-zone-name="Background" aria-label="Vers Background"></a>
+        <a href="../zone-03/zone-03.html" class="mini-zone mini-zone-3" data-mini-zone="3" data-zone-name="Anthropomorph" aria-label="Vers Anthropomorph"></a>
+        <a href="../zone-04/zone-04.html" class="mini-zone mini-zone-4" data-mini-zone="4" data-zone-name="NWMV" aria-label="Vers NWMV"></a>
+        <a href="../zone-05/zone-05.html" class="mini-zone mini-zone-5" data-mini-zone="5" data-zone-name="Bad publications & mailers" aria-label="Vers Bad publications & mailers"></a>
+        <a href="../zone-06/zone-06.html" class="mini-zone mini-zone-6" data-mini-zone="6" data-zone-name="VILE" aria-label="Vers VILE"></a>
+        <a href="../zone-07/zone-07.html" class="mini-zone mini-zone-7" data-mini-zone="7" data-zone-name="Cazazza" aria-label="Vers Cazazza"></a>
+        <a href="../zone-08/zone-08.html" class="mini-zone mini-zone-8" data-mini-zone="8" data-zone-name="Futurist Sound" aria-label="Vers Futurist Sound"></a>
+        <a href="../zone-09/zone-09.html" class="mini-zone mini-zone-9" data-mini-zone="9" data-zone-name="Irène Dogmatic" aria-label="Vers Irène Dogmatic"></a>
+        <a href="../zone-10/zone-10.html" class="mini-zone mini-zone-10" data-mini-zone="10" data-zone-name="COUM" aria-label="Vers COUM"></a>
+        <a href="../zone-11/zone-11.html" class="mini-zone mini-zone-11" data-mini-zone="11" data-zone-name="491" aria-label="Vers 491"></a>
+        <a href="../zone-12/zone-12.html" class="mini-zone mini-zone-12" data-mini-zone="12" data-zone-name="MAD" aria-label="Vers MAD"></a>
+        <a href="../zone-13/zone-13.html" class="mini-zone mini-zone-13" data-mini-zone="13" data-zone-name="Search and Destroy" aria-label="Vers Search and Destroy"></a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
   <script src="../minimap.js"></script>
+  <script src="../mobile-menu.js"></script>
 </body>
 </html>

@@ -2,66 +2,85 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Zone 01 — ECART</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Zone 01 — EC@RT</title>
+
   <link rel="stylesheet" href="../zone-core.css" />
   <link rel="stylesheet" href="../zone-sidebar.css" />
   <link rel="stylesheet" href="../zone-01/zone-01-audio.css" />
-  <link rel="stylesheet" href="../zone-01/zone_01_i" />
+  <link rel="stylesheet" href="../zone-01/zone_01_img.css" />
   <link rel="stylesheet" href="../zone_minimap.css" />
   <link rel="stylesheet" href="../zone-mobile.css" />
 </head>
-<body data-zone="1">
 
+<body data-zone="1" class="has-mobile-menu">
   <main class="page">
     <aside class="sidebar">
-      <a href="../../index.html" class="site-title">EC@RT</a>
+      <div class="sidebar-top">
+        <a href="../../index.html" class="home-button" aria-label="Retour à l’accueil">⌂</a>
+
+        <button
+          class="site-title menu-toggle"
+          type="button"
+          aria-expanded="false"
+          aria-label="Ouvrir ou fermer le menu"
+        >
+          EC@RT
+        </button>
+      </div>
 
       <nav class="zones-nav" aria-label="Zones de l'exposition">
         <a href="../zone-01/zone-01.html" class="zone-link" data-zone-link="1">Poster</a>
         <a href="../zone-02/zone-02.html" class="zone-link" data-zone-link="2">Background</a>
         <a href="../zone-03/zone-03.html" class="zone-link" data-zone-link="3">Anthropomorph</a>
         <a href="../zone-04/zone-04.html" class="zone-link" data-zone-link="4">NWMV</a>
-        <a href="../zone-05/zone-05.html" class="zone-link" data-zone-link="5">Bad publications & mailers</a>
+        <a href="../zone-05/zone-05.html" class="zone-link" data-zone-link="5">Bad publications &amp; mailers</a>
         <a href="../zone-06/zone-06.html" class="zone-link" data-zone-link="6">VILE</a>
         <a href="../zone-07/zone-07.html" class="zone-link" data-zone-link="7">Cazazza</a>
         <a href="../zone-08/zone-08.html" class="zone-link" data-zone-link="8">Futurist Sound</a>
         <a href="../zone-09/zone-09.html" class="zone-link" data-zone-link="9">Irène Dogmatic</a>
-        <a href="../zone-10/zone-010.html" class="zone-link" data-zone-link="10">COUM</a>
-        <a href="../zone-11/zone-011.html" class="zone-link" data-zone-link="11">491</a>
-        <a href="../zone-12/zone-012.html" class="zone-link" data-zone-link="12">MAD</a>
-        <a href="../zone-13/zone-013.html" class="zone-link" data-zone-link="13">Search and Destroy</a>
+        <a href="../zone-10/zone-10.html" class="zone-link" data-zone-link="10">COUM</a>
+        <a href="../zone-11/zone-11.html" class="zone-link" data-zone-link="11">491</a>
+        <a href="../zone-12/zone-12.html" class="zone-link" data-zone-link="12">MAD</a>
+        <a href="../zone-13/zone-13.html" class="zone-link" data-zone-link="13">Search and Destroy</a>
       </nav>
     </aside>
 
-  <div class="viewer">
-  <button class="audio-toggle" id="audioToggle" aria-label="Lancer l'audio-description">
-    <span class="audio-icon">🔊</span>
-    <span class="audio-text">audio description</span>
-  </button>
+    <section class="zone-main">
+      <div class="viewer">
+        <button class="audio-toggle" id="audioToggle" aria-label="Lancer l'audio-description">
+          <span class="audio-icon">🔊</span>
+          <span class="audio-text">audio description</span>
+        </button>
 
-  <audio id="posterAudio" preload="auto">
-    <source src="../../assets/son/AD_Poster.wav" type="audio/wav">
-    Votre navigateur ne supporte pas l’audio.
-  </audio>
+        <audio id="posterAudio" preload="auto">
+          <source src="../../assets/son/AD_Poster.wav" type="audio/wav" />
+          Votre navigateur ne supporte pas l’audio.
+        </audio>
 
-  <div class="image-viewer" id="imageViewer">
-    <img
-      src="../../assets/images/zone-01-affiche.jpeg"
-      class="zoom-image"
-      id="zoomImage"
-      alt="Affiche zone 01"
-      draggable="false"
-    >
-  </div>
-</div>
+        <div class="image-viewer" id="imageViewer">
+          <img
+            src="../../assets/images/zone-01-affiche.jpeg"
+            class="zoom-image"
+            id="zoomImage"
+            alt="Affiche zone 01"
+            draggable="false"
+          />
+        </div>
+      </div>
+    </section>
   </main>
 
   <aside class="mini-map" aria-label="Mini plan de navigation">
     <a href="../../index.html" class="mini-map-title"></a>
 
     <div class="mini-map-wrap">
-      <img src="../../assets/mini.png" alt="Mini plan de scénographie" class="mini-map-image" />
+      <img
+        src="../../assets/mini.png"
+        alt="Mini plan de scénographie"
+        class="mini-map-image"
+      />
+
       <a href="zone-01.html" class="mini-zone mini-zone-1" data-mini-zone="1" aria-label="Zone 1"></a>
       <a href="../zone-02/zone-02.html" class="mini-zone mini-zone-2" data-mini-zone="2" aria-label="Zone 2"></a>
       <a href="../zone-03/zone-03.html" class="mini-zone mini-zone-3" data-mini-zone="3" aria-label="Zone 3"></a>
@@ -71,15 +90,16 @@
       <a href="../zone-07/zone-07.html" class="mini-zone mini-zone-7" data-mini-zone="7" aria-label="Zone 7"></a>
       <a href="../zone-08/zone-08.html" class="mini-zone mini-zone-8" data-mini-zone="8" aria-label="Zone 8"></a>
       <a href="../zone-09/zone-09.html" class="mini-zone mini-zone-9" data-mini-zone="9" aria-label="Zone 9"></a>
-      <a href="../zone-10/zone-010.html" class="mini-zone mini-zone-10" data-mini-zone="10" aria-label="Zone 10"></a>
-      <a href="../zone-11/zone-011.html" class="mini-zone mini-zone-11" data-mini-zone="11" aria-label="Zone 11"></a>
-      <a href="../zone-12/zone-012.html" class="mini-zone mini-zone-12" data-mini-zone="12" aria-label="Zone 12"></a>
-      <a href="../zone-13/zone-013.html" class="mini-zone mini-zone-13" data-mini-zone="13" aria-label="Zone 13"></a>
+      <a href="../zone-10/zone-10.html" class="mini-zone mini-zone-10" data-mini-zone="10" aria-label="Zone 10"></a>
+      <a href="../zone-11/zone-11.html" class="mini-zone mini-zone-11" data-mini-zone="11" aria-label="Zone 11"></a>
+      <a href="../zone-12/zone-12.html" class="mini-zone mini-zone-12" data-mini-zone="12" aria-label="Zone 12"></a>
+      <a href="../zone-13/zone-13.html" class="mini-zone mini-zone-13" data-mini-zone="13" aria-label="Zone 13"></a>
     </div>
   </aside>
 
   <script src="zone_01_nav.js"></script>
   <script src="zone-01-audio.js"></script>
   <script src="../minimap.js"></script>
+  <script src="../mobile-menu.js"></script>
 </body>
 </html>

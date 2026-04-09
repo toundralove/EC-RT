@@ -1,9 +1,9 @@
 (function () {
   const body = document.body;
-  const title = document.querySelector(".site-title");
-  const nav = document.querySelector(".zones-nav");
+  const toggle = document.querySelector(".menu-toggle");
+  const nav = document.querySelector(".zones-nav, .sections");
 
-  if (!body || !title || !nav) return;
+  if (!body || !toggle || !nav) return;
   if (!body.classList.contains("has-mobile-menu")) return;
 
   function isMobile() {
@@ -12,17 +12,16 @@
 
   function closeMenu() {
     body.classList.remove("menu-open");
-    title.setAttribute("aria-expanded", "false");
+    toggle.setAttribute("aria-expanded", "false");
   }
 
   function openMenu() {
     body.classList.add("menu-open");
-    title.setAttribute("aria-expanded", "true");
+    toggle.setAttribute("aria-expanded", "true");
   }
 
-  function toggleMenu(event) {
+  function onToggleClick(event) {
     if (!isMobile()) return;
-
     event.preventDefault();
 
     if (body.classList.contains("menu-open")) {
@@ -32,23 +31,22 @@
     }
   }
 
-  title.setAttribute("aria-expanded", "false");
-  title.setAttribute("aria-controls", "zones-nav-mobile");
+  toggle.setAttribute("aria-expanded", "false");
 
   if (!nav.id) {
-    nav.id = "zones-nav-mobile";
+    nav.id = "mobile-nav";
   }
+  toggle.setAttribute("aria-controls", nav.id);
 
-  title.addEventListener("click", toggleMenu);
+  toggle.addEventListener("click", onToggleClick);
 
   window.addEventListener("resize", () => {
     if (!isMobile()) {
-      body.classList.remove("menu-open");
-      title.setAttribute("aria-expanded", "false");
+      closeMenu();
     }
   });
 
-  nav.querySelectorAll(".zone-link").forEach((link) => {
+  nav.querySelectorAll(".zone-link, .section-link").forEach((link) => {
     link.addEventListener("click", () => {
       closeMenu();
     });
