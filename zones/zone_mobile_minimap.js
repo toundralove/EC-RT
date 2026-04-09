@@ -1,3 +1,35 @@
+const STORAGE_KEY = "ecart_visited_zones";
+
+function getVisitedZones() {
+  try {
+    return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+  } catch {
+    return [];
+  }
+}
+
+function addVisitedZone(zoneId) {
+  const visited = getVisitedZones();
+
+  if (!visited.includes(zoneId)) {
+    visited.push(zoneId);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(visited));
+  }
+}
+
+function applyVisitedZones(zones, currentZone) {
+  const visitedZones = getVisitedZones();
+
+  zones.forEach((zone) => {
+    const id = zone.dataset.miniZone;
+    const isVisited = visitedZones.includes(id);
+    const isCurrent = id === currentZone;
+
+    zone.classList.toggle("is-current", isCurrent);
+    zone.classList.toggle("is-visited", isVisited && !isCurrent);
+  });
+}
+
 function initMobileMiniMap() {
   const toggle = document.getElementById("mobileMapToggle");
   const overlay = document.getElementById("mobileMapOverlay");
@@ -8,8 +40,11 @@ function initMobileMiniMap() {
 
   const zones = overlay.querySelectorAll(".mini-zone");
   const currentZone = document.body.dataset.zone || "";
-  let activeZone = null;
   let typingTimer = null;
+
+  if (currentZone) {
+    addVisitedZone(currentZone);
+  }
 
   function setToggleState(isOpen) {
     toggle.classList.toggle("is-open", isOpen);
@@ -35,8 +70,6 @@ function initMobileMiniMap() {
       const hint = zone.querySelector(".mobile-zone-hint");
       if (hint) hint.textContent = "";
     });
-
-    activeZone = null;
   }
 
   function resetStatus() {
@@ -48,10 +81,7 @@ function initMobileMiniMap() {
     overlay.classList.add("is-open");
     setToggleState(true);
     resetZoneHints();
-
-    zones.forEach((zone) => {
-      zone.classList.toggle("is-current", zone.dataset.miniZone === currentZone);
-    });
+    applyVisitedZones(zones, currentZone);
   }
 
   function closeMap() {
@@ -122,7 +152,6 @@ function initMobileMiniMap() {
 
         zone.dataset.armed = "true";
         zone.classList.add("is-armed");
-        activeZone = zone;
 
         if (status) {
           status.textContent = `Zone sélectionnée : ${name}`;
@@ -132,9 +161,11 @@ function initMobileMiniMap() {
         return;
       }
 
-      // deuxième tap => navigation normale
+      addVisitedZone(zone.dataset.miniZone);
     });
   });
+
+  applyVisitedZones(zones, currentZone);
 }
 
 document.addEventListener("DOMContentLoaded", initMobileMiniMap);

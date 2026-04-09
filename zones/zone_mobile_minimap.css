@@ -227,15 +227,26 @@
       0 0 20px rgba(255,255,255,0.1),
       inset 0 0 14px rgba(255,255,255,0.04);
   }
+.mobile-mini-map-wrap .mini-zone.is-visited {
+  background: rgba(255, 255, 255, 0.22);
+  border-color: rgba(255,255,255,0.42);
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.18),
+    0 0 12px rgba(255,255,255,0.22),
+    0 0 24px rgba(255,255,255,0.12),
+    inset 0 0 12px rgba(255,255,255,0.08);
+}
 
-  .mobile-mini-map-wrap .mini-zone.is-current {
-    background: rgba(255, 255, 255, 0.14);
-    border-color: rgba(255,255,255,0.32);
-    box-shadow:
-      0 0 24px rgba(255,255,255,0.14),
-      inset 0 0 16px rgba(255,255,255,0.06);
-  }
-
+.mobile-mini-map-wrap .mini-zone.is-current {
+  background: rgba(255, 255, 255, 0.98);
+  border-color: rgba(255, 255, 255, 1);
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.95),
+    0 0 12px rgba(255,255,255,0.95),
+    0 0 24px rgba(255,255,255,0.85),
+    0 0 40px rgba(255,255,255,0.55),
+    inset 0 0 14px rgba(255,255,255,0.92);
+}
   .mobile-zone-hint {
     position: absolute;
     left: 50%;
