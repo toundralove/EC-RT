@@ -11,11 +11,11 @@ document.addEventListener("DOMContentLoaded", () => {
       console.warn("Erreur chargement GLB :", viewer.getAttribute("src"));
     });
 
-    viewer.addEventListener("mousedown", () => {
+    viewer.addEventListener("pointerdown", () => {
       viewer.classList.add("is-interacting");
     });
 
-    window.addEventListener("mouseup", () => {
+    window.addEventListener("pointerup", () => {
       viewer.classList.remove("is-interacting");
     });
 
@@ -25,8 +25,24 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   cards.forEach((card) => {
-    card.addEventListener("click", () => {
-      card.classList.toggle("is-active");
+    card.addEventListener("click", (event) => {
+      event.stopPropagation();
+
+      const isAlreadyActive = card.classList.contains("is-active");
+
+      cards.forEach((otherCard) => {
+        otherCard.classList.remove("is-active");
+      });
+
+      if (!isAlreadyActive) {
+        card.classList.add("is-active");
+      }
+    });
+  });
+
+  document.addEventListener("click", () => {
+    cards.forEach((card) => {
+      card.classList.remove("is-active");
     });
   });
 });
