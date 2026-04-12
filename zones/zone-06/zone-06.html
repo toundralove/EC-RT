@@ -10,80 +10,12 @@
   <link rel="stylesheet" href="../zone_minimap.css" />
   <link rel="stylesheet" href="../zone-mobile.css" />
   <link rel="stylesheet" href="../zone_mobile_minimap.css" />
+  <link rel="stylesheet" href="./zone-06-glb.css" />
 
-  <style>
-    .zone-content-placeholder {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      padding: 28px;
-    }
-
-    .placeholder-shell {
-      width: min(100%, 920px);
-      min-height: 62vh;
-      padding: clamp(24px, 4vw, 48px);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      background:
-        radial-gradient(circle at top left, rgba(255,255,255,0.06), transparent 40%),
-        rgba(0, 0, 0, 0.86);
-      box-shadow:
-        0 0 0 1px rgba(255,255,255,0.03),
-        0 24px 80px rgba(0,0,0,0.35);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      gap: 18px;
-    }
-
-    .placeholder-kicker {
-      margin: 0;
-      font-size: 0.78rem;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      opacity: 0.7;
-    }
-
-    .placeholder-title {
-      margin: 0;
-      font-size: clamp(2rem, 4vw, 4rem);
-      line-height: 0.95;
-      font-weight: 500;
-      letter-spacing: -0.03em;
-    }
-
-    .placeholder-text {
-      margin: 0;
-      max-width: 34rem;
-      font-size: 1rem;
-      line-height: 1.5;
-      opacity: 0.86;
-    }
-
-    .placeholder-note {
-      margin-top: 10px;
-      font-size: 0.85rem;
-      opacity: 0.55;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-    }
-
-    @media (max-width: 980px) {
-      .zone-content-placeholder {
-        min-height: auto;
-        padding: 18px;
-        align-items: flex-start;
-        justify-content: flex-start;
-      }
-
-      .placeholder-shell {
-        width: 100%;
-        min-height: auto;
-        padding: 24px;
-      }
-    }
-  </style>
+  <script
+    type="module"
+    src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js">
+  </script>
 </head>
 
 <body data-zone="6" class="has-mobile-menu">
@@ -116,12 +48,68 @@
       </nav>
     </aside>
 
-    <section class="zone-content zone-content-placeholder">
-      <div class="placeholder-shell">
-        <p class="placeholder-kicker">Zone 06</p>
-        <h1 class="placeholder-title">VILE</h1>
-        <p class="placeholder-text">Contenu de la zone 6 — VILE à venir.</p>
-        <p class="placeholder-note">Page provisoire — structure active, mini-map active, contenu à venir.</p>
+    <section class="zone-content zone-glb-content">
+      <div class="glb-shell">
+        <p class="glb-kicker">Zone 06</p>
+        <h1 class="glb-title">VILE</h1>
+        <p class="glb-intro">
+          Scans 3D issus de photographies de magazines. Les objets peuvent être manipulés à la souris ou au doigt.
+        </p>
+
+        <div class="glb-grid">
+
+          <article class="glb-card">
+            <div class="glb-viewer-wrap">
+              <model-viewer
+                class="glb-viewer"
+                src="../../assets/glb/Vile-02-R.glb"
+                alt="Scan 3D VILE 01"
+                camera-controls
+                touch-action="pan-y"
+                interaction-prompt="none"
+                shadow-intensity="1"
+                exposure="1"
+                auto-rotate
+                auto-rotate-delay="0"
+                rotation-per-second="18deg">
+              </model-viewer>
+            </div>
+            <p class="glb-caption">VILE scan 01</p>
+          </article>
+
+          <article class="glb-card">
+            <div class="glb-viewer-wrap">
+              <model-viewer
+                class="glb-viewer"
+                src="../../assets/glb/Vile-02-V.glb"
+                alt="Scan 3D VILE 02"
+                camera-controls
+                touch-action="pan-y"
+                interaction-prompt="none"
+                shadow-intensity="1"
+                exposure="1">
+              </model-viewer>
+            </div>
+            <p class="glb-caption">VILE scan 02</p>
+          </article>
+
+          <article class="glb-card">
+            <div class="glb-viewer-wrap">
+              <model-viewer
+                class="glb-viewer"
+                src="../../assets/glb/Vile_01-R.glb"
+                alt="Scan 3D VILE 03"
+                camera-controls
+                touch-action="pan-y"
+                interaction-prompt="none"
+                shadow-intensity="1"
+                exposure="1">
+              </model-viewer>
+            </div>
+            <p class="glb-caption">VILE scan 03</p>
+          </article>
+
+        </div>
       </div>
     </section>
 
@@ -236,5 +224,6 @@
   <script src="../minimap.js"></script>
   <script src="../zone_mobile_minimap.js"></script>
   <script src="../mobile-menu.js"></script>
+  <script src="./zone-06-glb.js"></script>
 </body>
 </html>
