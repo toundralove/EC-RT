@@ -50,54 +50,76 @@
 
     <section class="zone-content zone-glb-content">
       <div class="glb-shell">
-        <p class="glb-kicker">Zone 06</p>
-        <h1 class="glb-title">VILE</h1>
+        <p class="glb-kicker"></p>
+        <h1 class="glb-title">VILE Magazine</h1>
         <p class="glb-intro">
           Scans 3D issus de photographies de magazines. Les objets peuvent être manipulés à la souris ou au doigt.
         </p>
 
         <div class="glb-grid">
 
-          <article class="glb-card">
-            <div class="glb-viewer-wrap">
-              <model-viewer
-                class="glb-viewer"
-                src="../../assets/glb/Vile-02-R.glb"
-                alt="Scan 3D VILE 01"
-                camera-controls
-                touch-action="pan-y"
-                interaction-prompt="none"
-                shadow-intensity="1"
-                exposure="1"
-                auto-rotate
-                auto-rotate-delay="0"
-                rotation-per-second="18deg">
-              </model-viewer>
-            </div>
-            <p class="glb-caption">VILE scan 01</p>
-          </article>
+   
+         <article class="glb-card">
+
+  <div class="glb-viewer-wrap glb-overlay">
+
+    <!-- IMAGE FOND -->
+    <img
+      src="../../assets/Vile/Vile-02-V.png"
+      alt="Scan VILE 01"
+      class="glb-preview"
+    />
+
+    <!-- MODEL 3D -->
+    <model-viewer
+      class="glb-viewer glb-overlay-model"
+      src="../../assets/Vile/Vile-02-V.glb"
+      camera-controls
+      interaction-prompt="none"
+      shadow-intensity="1"
+      exposure="1"
+      auto-rotate
+      auto-rotate-delay="0"
+      rotation-per-second="18deg">
+    </model-viewer>
+
+</article>
+
+         <article class="glb-card">
+
+  <div class="glb-viewer-wrap glb-overlay">
+
+    <!-- IMAGE FOND -->
+    <img
+      src="../../assets/Vile/Vile-01-V.png"
+      alt="Scan VILE 01"
+      class="glb-preview"
+    />
+
+    <!-- MODEL 3D -->
+    <model-viewer
+      class="glb-viewer glb-overlay-model"
+      src="../../assets/Vile/Vile-01-V.glb"
+      camera-controls
+      interaction-prompt="none"
+      shadow-intensity="1"
+      exposure="1"
+      auto-rotate
+      auto-rotate-delay="0"
+      rotation-per-second="18deg">
+    </model-viewer>
+
+  </div>
+
+  <p class="glb-caption">VILE scan 01</p>
+
+</article>
 
           <article class="glb-card">
             <div class="glb-viewer-wrap">
               <model-viewer
                 class="glb-viewer"
-                src="../../assets/glb/Vile-02-V.glb"
-                alt="Scan 3D VILE 02"
-                camera-controls
-                touch-action="pan-y"
-                interaction-prompt="none"
-                shadow-intensity="1"
-                exposure="1">
-              </model-viewer>
-            </div>
-            <p class="glb-caption">VILE scan 02</p>
-          </article>
-
-          <article class="glb-card">
-            <div class="glb-viewer-wrap">
-              <model-viewer
-                class="glb-viewer"
-                src="../../assets/glb/Vile_01-R.glb"
+                src="../../assets/Vile/Vile_01-R.glb"
                 alt="Scan 3D VILE 03"
                 camera-controls
                 touch-action="pan-y"

@@ -1,19 +1,16 @@
 document.addEventListener("DOMContentLoaded", () => {
   const viewers = document.querySelectorAll(".glb-viewer");
+  const cards = document.querySelectorAll(".glb-card");
 
   viewers.forEach((viewer) => {
-
-    // Quand le modèle est chargé
     viewer.addEventListener("load", () => {
       viewer.classList.add("is-ready");
     });
 
-    // Si erreur (super utile en debug)
     viewer.addEventListener("error", () => {
       console.warn("Erreur chargement GLB :", viewer.getAttribute("src"));
     });
 
-    // Interaction custom légère (optionnelle)
     viewer.addEventListener("mousedown", () => {
       viewer.classList.add("is-interacting");
     });
@@ -22,5 +19,14 @@ document.addEventListener("DOMContentLoaded", () => {
       viewer.classList.remove("is-interacting");
     });
 
+    viewer.addEventListener("click", (event) => {
+      event.stopPropagation();
+    });
+  });
+
+  cards.forEach((card) => {
+    card.addEventListener("click", () => {
+      card.classList.toggle("is-active");
+    });
   });
 });
