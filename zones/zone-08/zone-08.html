@@ -7,6 +7,7 @@
 
   <link rel="stylesheet" href="../zone-core.css" />
   <link rel="stylesheet" href="../zone-sidebar.css" />
+    <link rel="stylesheet" href="zone-08-unity.css" />
   <link rel="stylesheet" href="../zone_minimap.css" />
   <link rel="stylesheet" href="../zone-mobile.css" />
   <link rel="stylesheet" href="../zone_mobile_minimap.css" />
@@ -99,6 +100,8 @@
         </button>
       </div>
 
+      
+
       <nav class="zones-nav">
         <a href="../zone-01/zone-01.html" class="zone-link" data-zone-link="1">Poster</a>
         <a href="../zone-02/zone-02.html" class="zone-link" data-zone-link="2">Background</a>
@@ -116,14 +119,35 @@
       </nav>
     </aside>
 
-    <section class="zone-content zone-content-placeholder">
-      <div class="placeholder-shell">
-        <p class="placeholder-kicker">Zone 08</p>
-        <h1 class="placeholder-title">Futurist Sound</h1>
-        <p class="placeholder-text">Contenu de la zone 8 — Futurist Sound à venir.</p>
-        <p class="placeholder-note">Page provisoire — structure active, mini-map active, contenu à venir.</p>
+   <section class="zone-content zone-content-unity">
+      <div class="unity-shell">
+        <div id="unity-container" class="unity-container">
+          <canvas id="unity-canvas" tabindex="1"></canvas>
+
+          <div id="unity-warning" class="unity-warning"></div>
+
+          <div class="unity-loading" id="unity-loading">
+            <div class="unity-loading-panel">
+              <h2 class="unity-loading-title">EC@RT — Loading Environment</h2>
+
+              <p id="unity-loading-text">
+                Initialisation de l'environnement numérique.
+              </p>
+
+              <div class="unity-progress">
+                <div id="unity-progress-bar"></div>
+              </div>
+
+              <div class="unity-progress-meta">
+                <span>WebGL</span>
+                <span id="unity-progress-value">0%</span>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
+
 
   </main>
 
@@ -232,7 +256,8 @@
       </div>
     </div>
   </div>
-
+  <script src="zone_08.js"></script>
+   <script src="../zone-02/zone-02-unity-mobile-fix.js"></script>
   <script src="../minimap.js"></script>
   <script src="../zone_mobile_minimap.js"></script>
   <script src="../mobile-menu.js"></script>
