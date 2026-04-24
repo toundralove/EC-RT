@@ -1,7 +1,7 @@
 window.ECART_SOUND = [
   {
-    title: "Voix descriptive",
-    file: "./audio/zone09-voice.mp3"
+    title: "Audio Description",
+    file: "../../assets/son/AD_COUM.wav"
   },
 
   {
