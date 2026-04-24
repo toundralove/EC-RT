@@ -13,6 +13,8 @@
   <link rel="stylesheet" href="../zone_minimap.css" />
   <link rel="stylesheet" href="../zone-mobile.css" />
   <link rel="stylesheet" href="../zone_mobile_minimap.css" />
+     <link rel="stylesheet" href="../panel-info.css" />
+  <link rel="stylesheet" href="../panel-sound.css" />
 </head>
 
 <body data-zone="1" class="has-mobile-menu">
@@ -101,6 +103,7 @@
   </aside>
 
   <!-- BOUTON MOBILE -->
+ 
   <button
     id="mobileMapToggle"
     class="mobile-map-toggle"
@@ -114,6 +117,27 @@
       <span class="mobile-map-toggle__close-ring">✕</span>
     </span>
   </button>
+
+
+<button id="soundToggle" type="button">SOUND</button>
+
+<section id="soundPanel" aria-hidden="true">
+  <div class="sound-panel-inner">
+    <button class="sound-close" type="button">✕</button>
+    <h2 class="sound-panel-title">SOUND</h2>
+  </div>
+</section>
+
+<button id="infoToggle" type="button">INFO</button>
+
+<section id="infoPanel" aria-hidden="true">
+  <div class="info-panel-inner">
+    <button class="info-close" type="button">✕</button>
+    <h2 class="info-title"></h2>
+    <div class="info-description"></div>
+    <div class="info-ref"></div>
+  </div>
+</section>
 
   <!-- OVERLAY MOBILE -->
   <div id="mobileMapOverlay" class="mobile-map-overlay" aria-hidden="true">
@@ -190,6 +214,9 @@
     </div>
   </div>
 
+   <script src="./data-infos.js"></script>
+  <script src="./data-sound.js"></script>
+
 <script src="zone_01_camera.js"></script>
 <script src="zone_01_memory.js"></script>
 <script src="zone_01_atmosphere.js"></script>
@@ -198,6 +225,8 @@
   <script src="zone-01-audio.js"></script>
   <script src="../minimap.js"></script>
   <script src="../zone_mobile_minimap.js"></script>
+     <script src="../panel-sound.js"></script>
+     <script src="../panel-info.js"></script>
   <script src="../mobile-menu.js"></script>
 </body>
 </html>
