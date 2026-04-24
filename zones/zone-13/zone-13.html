@@ -10,6 +10,8 @@
   <link rel="stylesheet" href="../zone_minimap.css" />
   <link rel="stylesheet" href="../zone-mobile.css" />
   <link rel="stylesheet" href="../zone_mobile_minimap.css" />
+   <link rel="stylesheet" href="../panel-info.css" />
+  <link rel="stylesheet" href="../panel-sound.css" />
   <link rel="stylesheet" href="./zone-13.css" />
 </head>
 
@@ -80,38 +82,7 @@
     </div>
   </aside>
 
-  <div class="zone13-ui-dock" aria-label="Contrôles de la zone 13">
-    <button
-      id="mapDockButton"
-      class="zone13-ui-btn"
-      type="button"
-      aria-label="Ouvrir la carte"
-      aria-expanded="false"
-      aria-controls="mobileMapOverlay"
-    >
-      MAP
-    </button>
-
-    <button
-      id="soundActivate"
-      class="zone13-ui-btn"
-      type="button"
-      aria-label="Activer la transmission sonore"
-    >
-      SOUND
-    </button>
-
-    <button
-      id="infoToggle"
-      class="zone13-ui-btn is-active"
-      type="button"
-      aria-label="Afficher ou masquer les informations"
-      aria-pressed="true"
-    >
-      INFO
-    </button>
-  </div>
-
+  
   <button
     id="mobileMapToggle"
     class="mobile-map-toggle"
@@ -119,13 +90,36 @@
     aria-expanded="false"
     aria-controls="mobileMapOverlay"
     type="button"
-    hidden
   >
     <span class="mobile-map-toggle__label mobile-map-toggle__label--open">MAP</span>
     <span class="mobile-map-toggle__label mobile-map-toggle__label--close">
       <span class="mobile-map-toggle__close-ring">✕</span>
     </span>
   </button>
+
+ 
+
+<button id="soundToggle" type="button">SOUND</button>
+
+<section id="soundPanel" aria-hidden="true">
+  <div class="sound-panel-inner">
+    <button class="sound-close" type="button">✕</button>
+    <h2 class="sound-panel-title">SOUND</h2>
+  </div>
+</section>
+
+
+
+<button id="infoToggle" type="button">INFO</button>
+
+<section id="infoPanel" aria-hidden="true">
+  <div class="info-panel-inner">
+    <button class="info-close" type="button">✕</button>
+    <h2 class="info-title"></h2>
+    <div class="info-description"></div>
+    <div class="info-ref"></div>
+  </div>
+</section>
 
   <div id="mobileMapOverlay" class="mobile-map-overlay" aria-hidden="true">
     <div class="mobile-map-panel" id="mobileMapPanel">
@@ -183,8 +177,13 @@
     })();
   </script>
 
+   <script src="./data-infos.js"></script>
+  <script src="./data-sound.js"></script>
+
   <script src="../minimap.js"></script>
   <script src="../zone_mobile_minimap.js"></script>
+      <script src="../panel-sound.js"></script>
+     <script src="../panel-info.js"></script>
   <script src="../mobile-menu.js"></script>
   <script src="./zone-13.js"></script>
 </body>
