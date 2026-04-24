@@ -9,13 +9,13 @@ window.Zone01Exploration = (() => {
     stillDelay: 360,
     recordDelay: 1050,
 
-    maxMemoryPoints: 32,
+    maxMemoryPoints: 36,
 
     recompositionStartDepth: 0.78,
     recompositionFullDepth: 0.28,
     returnMessageDepth: 0.34,
 
-    memoryFadeDuration: 12000,
+    memoryFadeDuration: 45000,
     messageDuration: 2200
   };
 
@@ -115,15 +115,27 @@ window.Zone01Exploration = (() => {
 
     const memory = {
       id: `m-${now}-${Math.floor(Math.random() * 99999)}`,
+
       x: point.x,
       y: point.y,
-      visits: 1,
+
       dwellTime,
       strength: clamp(dwellTime / 2200, 0.22, 1),
+
       firstSeen: now,
       lastSeen: now,
       lastDepth: depth,
-      zoomScale: depth
+      zoomScale: depth,
+
+      sizeSeed: 0.7 + Math.random() * 0.9,
+
+      shapeA: 38 + Math.random() * 28,
+      shapeB: 52 + Math.random() * 34,
+      shapeC: 42 + Math.random() * 32,
+      shapeD: 58 + Math.random() * 28,
+
+      offsetX: (Math.random() - 0.5) * 18,
+      offsetY: (Math.random() - 0.5) * 18
     };
 
     window.Zone01Memory.addPoint(memory);
@@ -243,16 +255,6 @@ window.Zone01Exploration = (() => {
     recompositionLayer
       .querySelectorAll(".memory-recomposition-line")
       .forEach(line => line.remove());
-
-    const ordered = [...memories].sort((a, b) => a.firstSeen - b.firstSeen);
-
-    for (let i = 0; i < ordered.length - 1; i++) {
-      const line = document.createElement("div");
-      line.className = "memory-recomposition-line";
-      line.dataset.from = ordered[i].id;
-      line.dataset.to = ordered[i + 1].id;
-      recompositionLayer.appendChild(line);
-    }
   }
 
   function returnVisibility(depth) {
@@ -298,10 +300,8 @@ window.Zone01Exploration = (() => {
         Math.cos(time * 0.00068 + mark.phase - index) * 6 * visible;
 
       const size =
-        0.38 +
-        visible * 0.34 +
-        strength * 0.22 +
-        dwellBoost * 0.16;
+        memory.sizeSeed *
+        (0.42 + visible * 0.34 + strength * 0.26 + dwellBoost * 0.22);
 
       mark.screenX = baseX + driftX;
       mark.screenY = baseY + driftY;
@@ -315,9 +315,16 @@ window.Zone01Exploration = (() => {
       mark.el.style.opacity =
         clamp((0.12 + visible * (0.55 + strength * 0.45)) * fade, 0, 0.78);
 
+      mark.el.style.borderRadius = `
+        ${memory.shapeA}% ${100 - memory.shapeA}%
+        ${memory.shapeB}% ${100 - memory.shapeB}% /
+        ${memory.shapeC}% ${100 - memory.shapeC}%
+        ${memory.shapeD}% ${100 - memory.shapeD}%
+      `;
+
       mark.el.style.setProperty("--strength", strength.toFixed(3));
 
-      const cropZoom = 1.35 + memory.zoomScale * 5.2;
+      const cropZoom = 1.8 + memory.zoomScale * 7.5;
 
       mark.crop.style.transform = `
         translate(-50%, -50%)
@@ -325,29 +332,10 @@ window.Zone01Exploration = (() => {
       `;
 
       mark.crop.style.objectPosition = `
-        ${memory.x * 100}% ${memory.y * 100}%
+        ${clamp(memory.x * 100 + memory.offsetX, 0, 100)}%
+        ${clamp(memory.y * 100 + memory.offsetY, 0, 100)}%
       `;
     });
-
-    recompositionLayer
-      .querySelectorAll(".memory-recomposition-line")
-      .forEach(line => {
-        const from = memoryMarks.get(line.dataset.from);
-        const to = memoryMarks.get(line.dataset.to);
-
-        if (!from || !to) return;
-
-        const dx = to.screenX - from.screenX;
-        const dy = to.screenY - from.screenY;
-
-        line.style.width = `${Math.hypot(dx, dy)}px`;
-        line.style.opacity = visible * 0.38;
-
-        line.style.transform = `
-          translate3d(${from.screenX}px, ${from.screenY}px, 0)
-          rotate(${Math.atan2(dy, dx)}rad)
-        `;
-      });
   }
 
   function updateReturnMessage(cam) {
@@ -356,7 +344,7 @@ window.Zone01Exploration = (() => {
       window.Zone01Memory.count() > 0;
 
     if (inReturn && !wasReturning) {
-      showMessage("les fragments regardés se relient", 1800);
+      showMessage("les fragments regardés persistent", 1800);
     }
 
     wasReturning = inReturn;

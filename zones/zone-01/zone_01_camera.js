@@ -7,6 +7,7 @@ window.Zone01Camera = (() => {
   const CONFIG = {
     maxZoomMultiplier: 36,
     zoomSpeed: 0.0011,
+    pinchSpeed: 1,
     zoomSmooth: 0.16,
     panSmooth: 0.18
   };
@@ -16,22 +17,30 @@ window.Zone01Camera = (() => {
     targetScale: 1,
     minScale: 1,
     maxScale: 1,
+
     x: 0,
     y: 0,
     targetX: 0,
     targetY: 0,
+
     pointerX: 0,
     pointerY: 0,
+
     dragging: false,
     dragStartX: 0,
     dragStartY: 0,
+
     lastTime: 0
   };
+
+  const pointers = new Map();
+  let lastPinchDistance = null;
 
   const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
 
   function computeScales() {
     const rect = viewer.getBoundingClientRect();
+
     if (!img.naturalWidth || !img.naturalHeight) return;
 
     state.minScale = Math.min(
@@ -114,6 +123,7 @@ window.Zone01Camera = (() => {
   function reset() {
     state.scale = state.minScale;
     state.targetScale = state.minScale;
+
     state.x = 0;
     state.y = 0;
     state.targetX = 0;
@@ -147,40 +157,107 @@ window.Zone01Camera = (() => {
   );
 
   viewer.addEventListener("pointerdown", event => {
-    state.dragging = true;
-    viewer.classList.add("is-dragging");
+    pointers.set(event.pointerId, event);
 
-    state.dragStartX = event.clientX - state.targetX;
-    state.dragStartY = event.clientY - state.targetY;
-
-    viewer.setPointerCapture(event.pointerId);
-  });
-
-  viewer.addEventListener("pointermove", event => {
     const rect = viewer.getBoundingClientRect();
 
     state.pointerX = event.clientX - rect.left - rect.width / 2;
     state.pointerY = event.clientY - rect.top - rect.height / 2;
 
-    if (!state.dragging) return;
+    viewer.setPointerCapture(event.pointerId);
 
-    state.targetX = event.clientX - state.dragStartX;
-    state.targetY = event.clientY - state.dragStartY;
+    if (pointers.size === 1) {
+      state.dragging = true;
+      viewer.classList.add("is-dragging");
 
-    clampPosition();
+      state.dragStartX = event.clientX - state.targetX;
+      state.dragStartY = event.clientY - state.targetY;
+    }
+
+    if (pointers.size === 2) {
+      state.dragging = false;
+      viewer.classList.remove("is-dragging");
+
+      const pts = [...pointers.values()];
+      lastPinchDistance = Math.hypot(
+        pts[0].clientX - pts[1].clientX,
+        pts[0].clientY - pts[1].clientY
+      );
+    }
   });
 
-  function stopDrag(event) {
-    state.dragging = false;
-    viewer.classList.remove("is-dragging");
+  viewer.addEventListener("pointermove", event => {
+    if (!pointers.has(event.pointerId)) return;
+
+    pointers.set(event.pointerId, event);
+
+    const rect = viewer.getBoundingClientRect();
+
+    state.pointerX = event.clientX - rect.left - rect.width / 2;
+    state.pointerY = event.clientY - rect.top - rect.height / 2;
+
+    if (pointers.size === 1 && state.dragging) {
+      state.targetX = event.clientX - state.dragStartX;
+      state.targetY = event.clientY - state.dragStartY;
+      clampPosition();
+      return;
+    }
+
+    if (pointers.size === 2) {
+      const pts = [...pointers.values()];
+
+      const a = pts[0];
+      const b = pts[1];
+
+      const distance = Math.hypot(
+        a.clientX - b.clientX,
+        a.clientY - b.clientY
+      );
+
+      if (!lastPinchDistance) {
+        lastPinchDistance = distance;
+        return;
+      }
+
+      const centerX = (a.clientX + b.clientX) / 2;
+      const centerY = (a.clientY + b.clientY) / 2;
+
+      const factor = Math.pow(distance / lastPinchDistance, CONFIG.pinchSpeed);
+
+      zoomAt(centerX, centerY, factor);
+
+      lastPinchDistance = distance;
+    }
+  });
+
+  function endPointer(event) {
+    pointers.delete(event.pointerId);
 
     if (viewer.hasPointerCapture(event.pointerId)) {
       viewer.releasePointerCapture(event.pointerId);
     }
+
+    if (pointers.size === 0) {
+      state.dragging = false;
+      viewer.classList.remove("is-dragging");
+      lastPinchDistance = null;
+    }
+
+    if (pointers.size === 1) {
+      const remaining = [...pointers.values()][0];
+
+      state.dragging = true;
+      state.dragStartX = remaining.clientX - state.targetX;
+      state.dragStartY = remaining.clientY - state.targetY;
+
+      lastPinchDistance = null;
+    }
   }
 
-  viewer.addEventListener("pointerup", stopDrag);
-  viewer.addEventListener("pointercancel", stopDrag);
+  viewer.addEventListener("pointerup", endPointer);
+  viewer.addEventListener("pointercancel", endPointer);
+  viewer.addEventListener("pointerleave", endPointer);
+
   viewer.addEventListener("dblclick", reset);
 
   window.addEventListener("resize", () => {
