@@ -8,7 +8,8 @@
   <link rel="stylesheet" href="../zone-core.css" />
   <link rel="stylesheet" href="../zone-sidebar.css" />
   <link rel="stylesheet" href="../zone-01/zone-01-audio.css" />
-  <link rel="stylesheet" href="../zone-01/zone_01_img.css" />
+  <link rel="stylesheet" href="../zone-01/zone_01_core.css" />
+<link rel="stylesheet" href="../zone-01/zone_01_fx.css" />
   <link rel="stylesheet" href="../zone_minimap.css" />
   <link rel="stylesheet" href="../zone-mobile.css" />
   <link rel="stylesheet" href="../zone_mobile_minimap.css" />
@@ -59,15 +60,15 @@
           Votre navigateur ne supporte pas l’audio.
         </audio>
 
-        <div class="image-viewer" id="imageViewer" aria-label="Image navigable de la zone 01">
-          <img
-            src="../../assets/images/zone-01-affiche.jpeg"
-            class="zoom-image"
-            id="zoomImage"
-            alt="Affiche de la zone 01"
-            draggable="false"
-          />
-        </div>
+        <div class="image-viewer" id="imageViewer">
+  <img
+    src="../../assets/images/zone-01-affiche.jpeg"
+    class="zoom-image"
+    id="zoomImage"
+    alt="Affiche de la zone 01"
+    draggable="false"
+  />
+</div>
       </div>
     </section>
   </main>
@@ -189,7 +190,11 @@
     </div>
   </div>
 
-  <script src="zone_01_nav.js"></script>
+<script src="zone_01_camera.js"></script>
+<script src="zone_01_memory.js"></script>
+<script src="zone_01_atmosphere.js"></script>
+<script src="zone_01_exploration.js"></script>
+<script src="zone_01_main.js"></script>
   <script src="zone-01-audio.js"></script>
   <script src="../minimap.js"></script>
   <script src="../zone_mobile_minimap.js"></script>
