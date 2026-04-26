@@ -1,7 +1,7 @@
 window.ECART_SOUND = [
   {
     title: "Audio Description",
-    file: "../../assets/son/AD_Irene_Dogmatic"
+    file: "../../assets/son/AD_Irene_Dogmatic.wav"
   },
 
   {
