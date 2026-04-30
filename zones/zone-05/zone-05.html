@@ -21,7 +21,15 @@
     overflow: hidden;
     background: #050505;
     cursor: none;
+  touch-action: none;
+}
+
+@media (pointer: fine) {
+  .bad-zone {
+    touch-action: auto;
   }
+}
+
 
   .bad-table {
     position: absolute;
