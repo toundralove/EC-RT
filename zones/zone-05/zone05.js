@@ -16,6 +16,8 @@
   const minZoom = 1;
   const maxZoom = 3;
 
+  let lensZoom = 1;
+
   let originX = 50;
   let originY = 50;
 
@@ -87,12 +89,12 @@
 
   function applyTransform() {
     blurTable.style.transformOrigin = `${originX}% ${originY}%`;
-    lensTable.style.transformOrigin = `${originX}% ${originY}%`;
 
-    const transform = `translate(${panX}px, ${panY}px) scale(${zoom})`;
+    blurTable.style.transform = `translate(${panX}px, ${panY}px) scale(${zoom})`;
 
-    blurTable.style.transform = transform;
-    lensTable.style.transform = transform;
+    if (lensX && lensY) {
+      moveLens(lensX, lensY);
+    }
   }
 
   function updateOrigin(clientX, clientY) {
@@ -118,6 +120,9 @@
 
     lensTable.style.left = `${zoneRect.left - clientX + radius}px`;
     lensTable.style.top = `${zoneRect.top - clientY + radius}px`;
+
+    lensTable.style.transformOrigin = `${originX}% ${originY}%`;
+    lensTable.style.transform = `translate(${panX}px, ${panY}px) scale(${zoom * lensZoom})`;
   }
 
   function isInsideLens(clientX, clientY) {
@@ -129,43 +134,38 @@
 
   // PC / TRACKPAD
   zone.addEventListener(
-  "wheel",
-  (e) => {
-    const rect = zone.getBoundingClientRect();
+    "wheel",
+    (e) => {
+      const rect = zone.getBoundingClientRect();
 
-    const inside =
-      e.clientX >= rect.left &&
-      e.clientX <= rect.right &&
-      e.clientY >= rect.top &&
-      e.clientY <= rect.bottom;
+      const inside =
+        e.clientX >= rect.left &&
+        e.clientX <= rect.right &&
+        e.clientY >= rect.top &&
+        e.clientY <= rect.bottom;
 
-    if (!inside) return; // laisse le scroll normal
+      if (!inside) return;
 
-    updateOrigin(e.clientX, e.clientY);
-
-    const isTrackpad =
-      Math.abs(e.deltaX) > 0 ||
-      Math.abs(e.deltaY) < 40;
-
-    if (e.ctrlKey || !isTrackpad) {
-      // ZOOM (molette souris ou ctrl/pinch)
       e.preventDefault();
+      updateOrigin(e.clientX, e.clientY);
 
-      const delta = -e.deltaY * 0.0012;
-      zoom = clamp(zoom + delta, minZoom, maxZoom);
-    } else {
-      // PAN (2 doigts trackpad)
-      e.preventDefault();
+      const isTrackpad =
+        Math.abs(e.deltaX) > 0 ||
+        Math.abs(e.deltaY) < 40;
 
-      panX -= e.deltaX;
-      panY -= e.deltaY;
-    }
+      if (e.ctrlKey || !isTrackpad) {
+        const delta = -e.deltaY * 0.0012;
+        zoom = clamp(zoom + delta, minZoom, maxZoom);
+      } else {
+        panX -= e.deltaX;
+        panY -= e.deltaY;
+      }
 
-    applyTransform();
-    moveLens(e.clientX, e.clientY);
-  },
-  { passive: false }
-);
+      applyTransform();
+      moveLens(e.clientX, e.clientY);
+    },
+    { passive: false }
+  );
 
   zone.addEventListener("mousemove", (e) => {
     if (!isDragging) moveLens(e.clientX, e.clientY);
@@ -219,17 +219,8 @@
       const isDoubleTap = now - lastTapTime < 300;
 
       if (isDoubleTap) {
-        updateOrigin(touch.clientX, touch.clientY);
+        lensZoom = lensZoom > 1 ? 1 : 2;
 
-        if (zoom > 1.2) {
-          zoom = minZoom;
-          panX = 0;
-          panY = 0;
-        } else {
-          zoom = 2.4;
-        }
-
-        applyTransform();
         moveLens(lensX || touch.clientX, lensY || touch.clientY);
 
         lastTapTime = 0;
