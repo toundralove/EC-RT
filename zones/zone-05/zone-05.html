@@ -13,79 +13,81 @@
      <link rel="stylesheet" href="../panel-info.css" />
   <link rel="stylesheet" href="../panel-sound.css" />
 
-  <style>
-    .zone-content-placeholder {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      padding: 28px;
+ <style>
+  .bad-zone {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    background: #050505;
+    cursor: none;
+  }
+
+  .bad-table {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+  }
+
+  .bad-table--blur {
+    filter: blur(7px);
+    opacity: 0.88;
+  }
+
+  .bad-paper {
+    position: absolute;
+    width: clamp(220px, 30vw, 520px);
+    height: auto;
+    user-select: none;
+    pointer-events: none;
+    transform-origin: center;
+    box-shadow:
+      0 22px 55px rgba(0, 0, 0, 0.6),
+      0 0 1px rgba(255, 255, 255, 0.45);
+  }
+
+  .bad-lens {
+    position: fixed;
+    width: 280px;
+    height: 280px;
+    border-radius: 50%;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 999;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    border: 1px solid rgba(255, 255, 255, 0.45);
+    box-shadow:
+      0 0 30px rgba(255, 255, 255, 0.18),
+      inset 0 0 30px rgba(255, 255, 255, 0.12);
+  }
+
+  .bad-lens-table {
+  position: absolute;
+  width: var(--bad-zone-width);
+  height: var(--bad-zone-height);
+  filter: none;
+}
+
+  @media (max-width: 980px) {
+    .bad-zone {
+      height: calc(100vh - 80px);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .bad-lens {
+      width: 210px;
+      height: 210px;
     }
 
-    .placeholder-shell {
-      width: min(100%, 920px);
-      min-height: 62vh;
-      padding: clamp(24px, 4vw, 48px);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      background:
-        radial-gradient(circle at top left, rgba(255,255,255,0.06), transparent 40%),
-        rgba(0, 0, 0, 0.86);
-      box-shadow:
-        0 0 0 1px rgba(255,255,255,0.03),
-        0 24px 80px rgba(0,0,0,0.35);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      gap: 18px;
+    .bad-paper {
+      width: clamp(120px, 38vw, 240px);
     }
+  }
+</style>
 
-    .placeholder-kicker {
-      margin: 0;
-      font-size: 0.78rem;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      opacity: 0.7;
-    }
-
-    .placeholder-title {
-      margin: 0;
-      font-size: clamp(2rem, 4vw, 4rem);
-      line-height: 0.95;
-      font-weight: 500;
-      letter-spacing: -0.03em;
-    }
-
-    .placeholder-text {
-      margin: 0;
-      max-width: 34rem;
-      font-size: 1rem;
-      line-height: 1.5;
-      opacity: 0.86;
-    }
-
-    .placeholder-note {
-      margin-top: 10px;
-      font-size: 0.85rem;
-      opacity: 0.55;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-    }
-
-    @media (max-width: 980px) {
-      .zone-content-placeholder {
-        min-height: auto;
-        padding: 18px;
-        align-items: flex-start;
-        justify-content: flex-start;
-      }
-
-      .placeholder-shell {
-        width: 100%;
-        min-height: auto;
-        padding: 24px;
-      }
-    }
-  </style>
 </head>
 
 <body data-zone="5" class="has-mobile-menu">
@@ -118,14 +120,13 @@
       </nav>
     </aside>
 
-    <section class="zone-content zone-content-placeholder">
-      <div class="placeholder-shell">
-        <p class="placeholder-kicker">Zone 05</p>
-        <h1 class="placeholder-title">Bad publications & mailers</h1>
-        <p class="placeholder-text">Contenu de la zone 5 — Bad publications & mailers à venir.</p>
-        <p class="placeholder-note">Page provisoire — structure active, mini-map active, contenu à venir.</p>
-      </div>
-    </section>
+   <section class="zone-content bad-zone">
+  <div id="badBlurTable" class="bad-table bad-table--blur"></div>
+
+  <div id="badLens" class="bad-lens">
+    <div id="badLensTable" class="bad-lens-table"></div>
+  </div>
+</section>
 
   </main>
 
@@ -268,5 +269,6 @@
      <script src="../panel-sound.js"></script>
      <script src="../panel-info.js"></script>
   <script src="../mobile-menu.js"></script>
+  <script src="./zone05.js"></script>
 </body>
 </html>

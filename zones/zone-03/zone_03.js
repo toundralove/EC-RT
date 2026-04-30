@@ -12,13 +12,13 @@ function initZone02() {
     return;
   }
 
-  const buildPath = "./03_NWMV/Build"
-  const loaderUrl = buildPath + "/03_NWMV.loader.js";
+  const buildPath = "./03_ANT/Build"
+  const loaderUrl = buildPath + "/03_ANT.loader.js";
 
   const config = {
-    dataUrl: buildPath + "/03_NWMV.data.unityweb",
-    frameworkUrl: buildPath + "/03_NWMV.framework.js.unityweb",
-    codeUrl: buildPath + "/03_NWMV.wasm.unityweb",
+    dataUrl: buildPath + "/03_ANT.data.unityweb",
+    frameworkUrl: buildPath + "/03_ANT.framework.js.unityweb",
+    codeUrl: buildPath + "/03_ANT.wasm.unityweb",
     streamingAssetsUrl: "StreamingAssets",
     companyName: "DefaultCompany",
     productName: "MAMCO",
