@@ -10,18 +10,17 @@
     "./BAD-img/BAD_01.png",
     "./BAD-img/BAD_02.png",
     "./BAD-img/BAD_03.png",
-     "./BAD-img/BAD_04.png",
   ];
 
   let zoom = 1;
   const minZoom = 1;
-const maxZoom = 3.2;
+  const maxZoom = 3;
 
   let originX = 50;
   let originY = 50;
 
-  let pinchStartDistance = null;
-  let pinchStartZoom = 1;
+  let lastTapTime = 0;
+  let touchMoved = false;
 
   function rand(min, max) {
     return Math.random() * (max - min) + min;
@@ -103,27 +102,30 @@ const maxZoom = 3.2;
     lensTable.style.top = `${zoneRect.top - clientY + radius}px`;
   }
 
- zone.addEventListener(
-  "wheel",
-  (e) => {
-    const isZoomIntent =
-      e.ctrlKey ||              // trackpad pinch (Mac)
-      Math.abs(e.deltaY) < 50;  // micro scroll = souvent zoom
+  // ========================
+  // DESKTOP (molette / zoom)
+  // ========================
+  zone.addEventListener(
+    "wheel",
+    (e) => {
+      const isZoomIntent =
+        e.ctrlKey ||
+        Math.abs(e.deltaY) < 50;
 
-    if (!isZoomIntent) return; // laisse scroller la page
+      if (!isZoomIntent) return;
 
-    e.preventDefault();
+      e.preventDefault();
 
-    updateOrigin(e.clientX, e.clientY);
+      updateOrigin(e.clientX, e.clientY);
 
-    const delta = -e.deltaY * 0.0012;
-    zoom = clamp(zoom + delta, minZoom, maxZoom);
+      const delta = -e.deltaY * 0.0012;
+      zoom = clamp(zoom + delta, minZoom, maxZoom);
 
-    applyZoom();
-    moveLens(e.clientX, e.clientY);
-  },
-  { passive: false }
-);
+      applyZoom();
+      moveLens(e.clientX, e.clientY);
+    },
+    { passive: false }
+  );
 
   zone.addEventListener("mousemove", (e) => {
     moveLens(e.clientX, e.clientY);
@@ -137,53 +139,67 @@ const maxZoom = 3.2;
     lens.style.opacity = "0";
   });
 
+  // ========================
+  // MOBILE / TABLET
+  // ========================
   zone.addEventListener(
     "touchstart",
-    (e) => {
-      if (e.touches.length === 2) {
-        pinchStartDistance = getTouchDistance(e.touches[0], e.touches[1]);
-        pinchStartZoom = zoom;
-      }
+    () => {
+      touchMoved = false;
     },
     { passive: true }
   );
 
   zone.addEventListener(
     "touchmove",
-    (e) => {
-      if (e.touches.length === 2 && pinchStartDistance) {
-        const currentDistance = getTouchDistance(e.touches[0], e.touches[1]);
-        const ratio = currentDistance / pinchStartDistance;
-
-        const centerX = (e.touches[0].clientX + e.touches[1].clientX) / 2;
-        const centerY = (e.touches[0].clientY + e.touches[1].clientY) / 2;
-
-        updateOrigin(centerX, centerY);
-
-        zoom = clamp(pinchStartZoom * ratio, minZoom, maxZoom);
-
-        applyZoom();
-        moveLens(centerX, centerY);
-      }
-
-      if (e.touches.length === 1) {
-        const t = e.touches[0];
-        moveLens(t.clientX, t.clientY);
-      }
+    () => {
+      touchMoved = true;
+      lens.style.opacity = "0"; // coupe la loupe pendant scroll
     },
     { passive: true }
   );
 
-  zone.addEventListener("touchend", () => {
-    pinchStartDistance = null;
-  });
+  zone.addEventListener(
+    "touchend",
+    (e) => {
+      if (touchMoved) return;
 
-  function getTouchDistance(t1, t2) {
-    const dx = t1.clientX - t2.clientX;
-    const dy = t1.clientY - t2.clientY;
-    return Math.sqrt(dx * dx + dy * dy);
-  }
+      const touch = e.changedTouches[0];
+      if (!touch) return;
 
+      const now = Date.now();
+      const isDoubleTap = now - lastTapTime < 300;
+
+      // ===== DOUBLE TAP → ZOOM =====
+      if (isDoubleTap) {
+        updateOrigin(touch.clientX, touch.clientY);
+
+        zoom = zoom > 1.05 ? 1 : 2.2;
+
+        applyZoom();
+        moveLens(touch.clientX, touch.clientY);
+
+        lens.style.opacity = "0";
+        lastTapTime = 0;
+        return;
+      }
+
+      // ===== TAP SIMPLE → LOUPE =====
+      moveLens(touch.clientX, touch.clientY);
+      lens.style.opacity = "1";
+
+      setTimeout(() => {
+        lens.style.opacity = "0";
+      }, 900);
+
+      lastTapTime = now;
+    },
+    { passive: true }
+  );
+
+  // ========================
+  // INIT
+  // ========================
   createScene();
 
   window.addEventListener("resize", () => {
