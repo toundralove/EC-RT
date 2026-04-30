@@ -10,6 +10,7 @@
     "./BAD-img/BAD_01.png",
     "./BAD-img/BAD_02.png",
     "./BAD-img/BAD_03.png",
+     "./BAD-img/BAD_04.png",
   ];
 
   let zoom = 1;
@@ -102,21 +103,27 @@ const maxZoom = 3.2;
     lensTable.style.top = `${zoneRect.top - clientY + radius}px`;
   }
 
-  zone.addEventListener(
-    "wheel",
-    (e) => {
-      e.preventDefault();
+ zone.addEventListener(
+  "wheel",
+  (e) => {
+    const isZoomIntent =
+      e.ctrlKey ||              // trackpad pinch (Mac)
+      Math.abs(e.deltaY) < 50;  // micro scroll = souvent zoom
 
-      updateOrigin(e.clientX, e.clientY);
+    if (!isZoomIntent) return; // laisse scroller la page
 
-      const delta = -e.deltaY * 0.0012;
-      zoom = clamp(zoom + delta, minZoom, maxZoom);
+    e.preventDefault();
 
-      applyZoom();
-      moveLens(e.clientX, e.clientY);
-    },
-    { passive: false }
-  );
+    updateOrigin(e.clientX, e.clientY);
+
+    const delta = -e.deltaY * 0.0012;
+    zoom = clamp(zoom + delta, minZoom, maxZoom);
+
+    applyZoom();
+    moveLens(e.clientX, e.clientY);
+  },
+  { passive: false }
+);
 
   zone.addEventListener("mousemove", (e) => {
     moveLens(e.clientX, e.clientY);
