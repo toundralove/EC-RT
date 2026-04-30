@@ -102,23 +102,15 @@
     lensTable.style.top = `${zoneRect.top - clientY + radius}px`;
   }
 
-  // ========================
-  // DESKTOP (molette / zoom)
-  // ========================
+  // DESKTOP — molette / trackpad = zoom
   zone.addEventListener(
     "wheel",
     (e) => {
-      const isZoomIntent =
-        e.ctrlKey ||
-        Math.abs(e.deltaY) < 50;
-
-      if (!isZoomIntent) return;
-
       e.preventDefault();
 
       updateOrigin(e.clientX, e.clientY);
 
-      const delta = -e.deltaY * 0.0012;
+      const delta = -e.deltaY * 0.001;
       zoom = clamp(zoom + delta, minZoom, maxZoom);
 
       applyZoom();
@@ -127,6 +119,7 @@
     { passive: false }
   );
 
+  // DESKTOP — loupe souris
   zone.addEventListener("mousemove", (e) => {
     moveLens(e.clientX, e.clientY);
   });
@@ -139,9 +132,7 @@
     lens.style.opacity = "0";
   });
 
-  // ========================
-  // MOBILE / TABLET
-  // ========================
+  // MOBILE — scroll libre + tap / double tap
   zone.addEventListener(
     "touchstart",
     () => {
@@ -154,7 +145,7 @@
     "touchmove",
     () => {
       touchMoved = true;
-      lens.style.opacity = "0"; // coupe la loupe pendant scroll
+      lens.style.opacity = "0";
     },
     { passive: true }
   );
@@ -170,11 +161,15 @@
       const now = Date.now();
       const isDoubleTap = now - lastTapTime < 300;
 
-      // ===== DOUBLE TAP → ZOOM =====
+      // DOUBLE TAP → zoom / dézoom
       if (isDoubleTap) {
         updateOrigin(touch.clientX, touch.clientY);
 
-        zoom = zoom > 1.05 ? 1 : 2.2;
+        if (zoom > 1.2) {
+          zoom = minZoom;
+        } else {
+          zoom = 2.4;
+        }
 
         applyZoom();
         moveLens(touch.clientX, touch.clientY);
@@ -184,22 +179,19 @@
         return;
       }
 
-      // ===== TAP SIMPLE → LOUPE =====
+      // TAP SIMPLE → loupe temporaire
       moveLens(touch.clientX, touch.clientY);
       lens.style.opacity = "1";
 
       setTimeout(() => {
         lens.style.opacity = "0";
-      }, 900);
+      }, 850);
 
       lastTapTime = now;
     },
     { passive: true }
   );
 
-  // ========================
-  // INIT
-  // ========================
   createScene();
 
   window.addEventListener("resize", () => {
