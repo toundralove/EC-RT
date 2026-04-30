@@ -19,6 +19,15 @@
   let originX = 50;
   let originY = 50;
 
+  let panX = 0;
+  let panY = 0;
+
+  let isDragging = false;
+  let dragStartX = 0;
+  let dragStartY = 0;
+  let panStartX = 0;
+  let panStartY = 0;
+
   let lastTapTime = 0;
   let touchMoved = false;
 
@@ -72,8 +81,10 @@
     blurTable.style.transformOrigin = `${originX}% ${originY}%`;
     lensTable.style.transformOrigin = `${originX}% ${originY}%`;
 
-    blurTable.style.transform = `scale(${zoom})`;
-    lensTable.style.transform = `scale(${zoom})`;
+    const transform = `translate(${panX}px, ${panY}px) scale(${zoom})`;
+
+    blurTable.style.transform = transform;
+    lensTable.style.transform = transform;
   }
 
   function updateOrigin(clientX, clientY) {
@@ -102,7 +113,9 @@
     lensTable.style.top = `${zoneRect.top - clientY + radius}px`;
   }
 
-  // DESKTOP — molette / trackpad = zoom
+  // ========================
+  // DESKTOP — trackpad / souris
+  // ========================
   zone.addEventListener(
     "wheel",
     (e) => {
@@ -110,8 +123,19 @@
 
       updateOrigin(e.clientX, e.clientY);
 
-      const delta = -e.deltaY * 0.001;
-      zoom = clamp(zoom + delta, minZoom, maxZoom);
+      // CTRL + molette / pinch trackpad = zoom
+      if (e.ctrlKey) {
+        const delta = -e.deltaY * 0.01;
+        zoom = clamp(zoom + delta, minZoom, maxZoom);
+
+        applyZoom();
+        moveLens(e.clientX, e.clientY);
+        return;
+      }
+
+      // Deux doigts sur trackpad = déplacement (pan)
+      panX -= e.deltaX;
+      panY -= e.deltaY;
 
       applyZoom();
       moveLens(e.clientX, e.clientY);
@@ -119,9 +143,9 @@
     { passive: false }
   );
 
-  // DESKTOP — loupe souris
+  // Souris — loupe
   zone.addEventListener("mousemove", (e) => {
-    moveLens(e.clientX, e.clientY);
+    if (!isDragging) moveLens(e.clientX, e.clientY);
   });
 
   zone.addEventListener("mouseenter", (e) => {
@@ -129,10 +153,47 @@
   });
 
   zone.addEventListener("mouseleave", () => {
+    if (!isDragging) lens.style.opacity = "0";
+  });
+
+  // Clic gauche + drag = déplacement
+  zone.addEventListener("mousedown", (e) => {
+    if (e.button !== 0) return;
+
+    isDragging = true;
+    dragStartX = e.clientX;
+    dragStartY = e.clientY;
+    panStartX = panX;
+    panStartY = panY;
+
+    zone.classList.add("is-dragging");
     lens.style.opacity = "0";
   });
 
-  // MOBILE — scroll libre + tap / double tap
+  window.addEventListener("mousemove", (e) => {
+    if (!isDragging) return;
+
+    const dx = e.clientX - dragStartX;
+    const dy = e.clientY - dragStartY;
+
+    panX = panStartX + dx;
+    panY = panStartY + dy;
+
+    applyZoom();
+  });
+
+  window.addEventListener("mouseup", (e) => {
+    if (!isDragging) return;
+
+    isDragging = false;
+    zone.classList.remove("is-dragging");
+
+    moveLens(e.clientX, e.clientY);
+  });
+
+  // ========================
+  // MOBILE / TABLET
+  // ========================
   zone.addEventListener(
     "touchstart",
     () => {
@@ -161,12 +222,14 @@
       const now = Date.now();
       const isDoubleTap = now - lastTapTime < 300;
 
-      // DOUBLE TAP → zoom / dézoom
+      // DOUBLE TAP → zoom
       if (isDoubleTap) {
         updateOrigin(touch.clientX, touch.clientY);
 
         if (zoom > 1.2) {
           zoom = minZoom;
+          panX = 0;
+          panY = 0;
         } else {
           zoom = 2.4;
         }
@@ -179,19 +242,22 @@
         return;
       }
 
-      // TAP SIMPLE → loupe temporaire
+      // TAP → loupe
       moveLens(touch.clientX, touch.clientY);
       lens.style.opacity = "1";
 
       setTimeout(() => {
         lens.style.opacity = "0";
-      }, 850);
+      }, 800);
 
       lastTapTime = now;
     },
     { passive: true }
   );
 
+  // ========================
+  // INIT
+  // ========================
   createScene();
 
   window.addEventListener("resize", () => {
