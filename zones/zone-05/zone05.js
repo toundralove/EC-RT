@@ -22,6 +22,9 @@
   let panX = 0;
   let panY = 0;
 
+  let lensX = 0;
+  let lensY = 0;
+
   let isDragging = false;
   let dragStartX = 0;
   let dragStartY = 0;
@@ -29,11 +32,7 @@
   let panStartY = 0;
 
   let lastTapTime = 0;
-
-  let lensX = 0;
-  let lensY = 0;
-
-  let touchMode = null; // "lens" ou "pan"
+  let touchMode = null;
   let touchStartX = 0;
   let touchStartY = 0;
   let touchPanStartX = 0;
@@ -47,6 +46,10 @@
     return Math.min(max, Math.max(min, value));
   }
 
+  function isTouchDevice() {
+    return window.matchMedia("(pointer: coarse)").matches;
+  }
+
   function createPaper(src, data) {
     const img = document.createElement("img");
     img.src = src;
@@ -56,10 +59,7 @@
     img.style.top = `${data.y}%`;
     img.style.zIndex = data.z;
     img.style.opacity = data.opacity;
-    img.style.transform = `
-      rotate(${data.rot}deg)
-      scale(${data.scale})
-    `;
+    img.style.transform = `rotate(${data.rot}deg) scale(${data.scale})`;
 
     return img;
   }
@@ -75,17 +75,17 @@
         rot: rand(-24, 24),
         scale: rand(1.0, 1.45),
         z: Math.floor(rand(1, 40)),
-        opacity: rand(0.82, 0.98)
+        opacity: rand(0.82, 0.98),
       };
 
       blurTable.appendChild(createPaper(src, data));
       lensTable.appendChild(createPaper(src, data));
     });
 
-    applyZoom();
+    applyTransform();
   }
 
-  function applyZoom() {
+  function applyTransform() {
     blurTable.style.transformOrigin = `${originX}% ${originY}%`;
     lensTable.style.transformOrigin = `${originX}% ${originY}%`;
 
@@ -98,11 +98,8 @@
   function updateOrigin(clientX, clientY) {
     const rect = zone.getBoundingClientRect();
 
-    originX = ((clientX - rect.left) / rect.width) * 100;
-    originY = ((clientY - rect.top) / rect.height) * 100;
-
-    originX = clamp(originX, 0, 100);
-    originY = clamp(originY, 0, 100);
+    originX = clamp(((clientX - rect.left) / rect.width) * 100, 0, 100);
+    originY = clamp(((clientY - rect.top) / rect.height) * 100, 0, 100);
   }
 
   function moveLens(clientX, clientY) {
@@ -110,8 +107,7 @@
     lensY = clientY;
 
     const zoneRect = zone.getBoundingClientRect();
-    const lensSize = lens.offsetWidth;
-    const radius = lensSize / 2;
+    const radius = lens.offsetWidth / 2;
 
     lens.style.left = `${clientX}px`;
     lens.style.top = `${clientY}px`;
@@ -127,35 +123,49 @@
   function isInsideLens(clientX, clientY) {
     const dx = clientX - lensX;
     const dy = clientY - lensY;
-    const r = lens.offsetWidth / 2;
-    return Math.sqrt(dx * dx + dy * dy) <= r;
+    const radius = lens.offsetWidth / 2;
+    return Math.sqrt(dx * dx + dy * dy) <= radius;
   }
 
-  // DESKTOP — trackpad / souris
+  // PC / TRACKPAD
   zone.addEventListener(
-    "wheel",
-    (e) => {
+  "wheel",
+  (e) => {
+    const rect = zone.getBoundingClientRect();
+
+    const inside =
+      e.clientX >= rect.left &&
+      e.clientX <= rect.right &&
+      e.clientY >= rect.top &&
+      e.clientY <= rect.bottom;
+
+    if (!inside) return; // laisse le scroll normal
+
+    updateOrigin(e.clientX, e.clientY);
+
+    const isTrackpad =
+      Math.abs(e.deltaX) > 0 ||
+      Math.abs(e.deltaY) < 40;
+
+    if (e.ctrlKey || !isTrackpad) {
+      // ZOOM (molette souris ou ctrl/pinch)
       e.preventDefault();
 
-      updateOrigin(e.clientX, e.clientY);
-
-      if (e.ctrlKey) {
-        const delta = -e.deltaY * 0.01;
-        zoom = clamp(zoom + delta, minZoom, maxZoom);
-
-        applyZoom();
-        moveLens(e.clientX, e.clientY);
-        return;
-      }
+      const delta = -e.deltaY * 0.0012;
+      zoom = clamp(zoom + delta, minZoom, maxZoom);
+    } else {
+      // PAN (2 doigts trackpad)
+      e.preventDefault();
 
       panX -= e.deltaX;
       panY -= e.deltaY;
+    }
 
-      applyZoom();
-      moveLens(e.clientX, e.clientY);
-    },
-    { passive: false }
-  );
+    applyTransform();
+    moveLens(e.clientX, e.clientY);
+  },
+  { passive: false }
+);
 
   zone.addEventListener("mousemove", (e) => {
     if (!isDragging) moveLens(e.clientX, e.clientY);
@@ -179,31 +189,26 @@
     panStartY = panY;
 
     zone.classList.add("is-dragging");
-    lens.style.opacity = "0";
   });
 
   window.addEventListener("mousemove", (e) => {
     if (!isDragging) return;
 
-    const dx = e.clientX - dragStartX;
-    const dy = e.clientY - dragStartY;
+    panX = panStartX + (e.clientX - dragStartX);
+    panY = panStartY + (e.clientY - dragStartY);
 
-    panX = panStartX + dx;
-    panY = panStartY + dy;
-
-    applyZoom();
+    applyTransform();
+    moveLens(e.clientX, e.clientY);
   });
 
-  window.addEventListener("mouseup", (e) => {
+  window.addEventListener("mouseup", () => {
     if (!isDragging) return;
 
     isDragging = false;
     zone.classList.remove("is-dragging");
-
-    moveLens(e.clientX, e.clientY);
   });
 
-  // MOBILE / TABLET
+  // MOBILE / TABLETTE
   zone.addEventListener(
     "touchstart",
     (e) => {
@@ -224,7 +229,7 @@
           zoom = 2.4;
         }
 
-        applyZoom();
+        applyTransform();
         moveLens(lensX || touch.clientX, lensY || touch.clientY);
 
         lastTapTime = 0;
@@ -238,20 +243,20 @@
       touchPanStartX = panX;
       touchPanStartY = panY;
 
-      if (isInsideLens(touch.clientX, touch.clientY)) {
-        touchMode = "lens";
-      } else {
-        touchMode = "pan";
-      }
+      touchMode = isInsideLens(touch.clientX, touch.clientY)
+        ? "lens"
+        : "pan";
 
       lens.style.opacity = "1";
     },
-    { passive: true }
+    { passive: false }
   );
 
   zone.addEventListener(
     "touchmove",
     (e) => {
+      e.preventDefault();
+
       const touch = e.touches[0];
       if (!touch) return;
 
@@ -261,17 +266,14 @@
       }
 
       if (touchMode === "pan") {
-        const dx = touch.clientX - touchStartX;
-        const dy = touch.clientY - touchStartY;
+        panX = touchPanStartX + (touch.clientX - touchStartX);
+        panY = touchPanStartY + (touch.clientY - touchStartY);
 
-        panX = touchPanStartX + dx;
-        panY = touchPanStartY + dy;
-
-        applyZoom();
+        applyTransform();
         moveLens(lensX, lensY);
       }
     },
-    { passive: true }
+    { passive: false }
   );
 
   zone.addEventListener(
@@ -280,23 +282,22 @@
       touchMode = null;
       lens.style.opacity = "1";
     },
-    { passive: true }
+    { passive: false }
   );
-
-  function isTouchDevice() {
-    return window.matchMedia("(pointer: coarse)").matches;
-  }
 
   createScene();
 
   requestAnimationFrame(() => {
     const rect = zone.getBoundingClientRect();
     moveLens(rect.left + rect.width / 2, rect.top + rect.height / 2);
-    if (!isTouchDevice()) lens.style.opacity = "0";
+
+    if (!isTouchDevice()) {
+      lens.style.opacity = "0";
+    }
   });
 
   window.addEventListener("resize", () => {
-    applyZoom();
+    applyTransform();
     moveLens(lensX, lensY);
   });
 })();

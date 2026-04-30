@@ -14,14 +14,68 @@
   <link rel="stylesheet" href="../panel-sound.css" />
 
  <style>
-  .bad-zone {
-    position: relative;
-    width: 100%;
-    height: 100vh;
-    overflow: hidden;
-    background: #050505;
-    cursor: none;
+.bad-zone {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  background: #050505;
+  cursor: none;
   touch-action: none;
+}
+
+.bad-table,
+.bad-lens-table {
+  transform-origin: center center;
+  overflow: visible;
+}
+
+.bad-table {
+  position: absolute;
+  inset: 0;
+}
+
+.bad-table--blur {
+  filter: blur(7px) contrast(0.9) brightness(0.9);
+  opacity: 0.9;
+}
+
+.bad-paper {
+  position: absolute;
+  width: clamp(220px, 30vw, 620px);
+  height: auto;
+  user-select: none;
+  pointer-events: none;
+  transform-origin: center;
+  box-shadow:
+    0 24px 65px rgba(0, 0, 0, 0.65),
+    0 0 1px rgba(255, 255, 255, 0.45);
+}
+
+.bad-lens {
+  position: fixed;
+  width: 280px;
+  height: 280px;
+  border-radius: 50%;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 999;
+  transform: translate(-50%, -50%);
+  opacity: 1;
+  background: rgba(245, 241, 220, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  box-shadow:
+    0 0 30px rgba(255, 255, 255, 0.18),
+    inset 0 0 30px rgba(255, 255, 255, 0.12);
+}
+
+.bad-lens-table {
+  position: absolute;
+  filter: none;
+}
+
+.bad-zone.is-dragging {
+  cursor: grabbing;
 }
 
 @media (pointer: fine) {
@@ -30,74 +84,16 @@
   }
 }
 
-
-  .bad-table {
-    position: absolute;
-    inset: 0;
-    overflow: hidden;
-  }
-
-  .bad-table--blur {
-    filter: blur(7px);
-    opacity: 0.88;
+@media (max-width: 768px) {
+  .bad-lens {
+    width: 210px;
+    height: 210px;
   }
 
   .bad-paper {
-    position: absolute;
-    width: clamp(220px, 30vw, 520px);
-    height: auto;
-    user-select: none;
-    pointer-events: none;
-    transform-origin: center;
-    box-shadow:
-      0 22px 55px rgba(0, 0, 0, 0.6),
-      0 0 1px rgba(255, 255, 255, 0.45);
+    width: clamp(160px, 44vw, 360px);
   }
-
-  .bad-lens {
-    position: fixed;
-    width: 280px;
-    height: 280px;
-    border-radius: 50%;
-    overflow: hidden;
-    pointer-events: none;
-    z-index: 999;
-    transform: translate(-50%, -50%);
-    opacity: 0;
-    transition: opacity 0.2s ease;
-    border: 1px solid rgba(255, 255, 255, 0.45);
-    box-shadow:
-      0 0 30px rgba(255, 255, 255, 0.18),
-      inset 0 0 30px rgba(255, 255, 255, 0.12);
-  }
-
-  .bad-lens-table {
-  position: absolute;
-  width: var(--bad-zone-width);
-  height: var(--bad-zone-height);
-  filter: none;
 }
-
-.bad-zone.is-dragging {
-  cursor: grabbing;
-}
-
-  @media (max-width: 980px) {
-    .bad-zone {
-      height: calc(100vh - 80px);
-    }
-  }
-
-  @media (max-width: 768px) {
-    .bad-lens {
-      width: 210px;
-      height: 210px;
-    }
-
-    .bad-paper {
-      width: clamp(120px, 38vw, 240px);
-    }
-  }
 </style>
 
 </head>
